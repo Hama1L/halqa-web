@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Heart of Namaaz — A Guide to Khushū</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Naskh+Arabic:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1208;
+      --parchment: #f7f0e3;
+      --gold: #b8913a;
+      --gold-light: #d4a84b;
+      --gold-dim: #8a6a28;
+      --rust: #7a3b1e;
+      --sage: #3d5c4a;
+      --cream: #fdf8ef;
+      --shadow: rgba(26, 18, 8, 0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* Texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 80px 24px 60px;
+      background: var(--ink);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, #2d1f08 0%, #0f0a03 100%);
+    }
+
+    .hero-border {
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(184, 145, 58, 0.25);
+      pointer-events: none;
+    }
+
+    .hero-corner {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-color: var(--gold);
+      border-style: solid;
+      opacity: 0.6;
+    }
+
+    .hero-corner.tl {
+      top: 16px;
+      left: 16px;
+      border-width: 2px 0 0 2px;
+    }
+
+    .hero-corner.tr {
+      top: 16px;
+      right: 16px;
+      border-width: 2px 2px 0 0;
+    }
+
+    .hero-corner.bl {
+      bottom: 16px;
+      left: 16px;
+      border-width: 0 0 2px 2px;
+    }
+
+    .hero-corner.br {
+      bottom: 16px;
+      right: 16px;
+      border-width: 0 2px 2px 0;
+    }
+
+    .hero-arabic {
+      position: relative;
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: clamp(28px, 5vw, 48px);
+      color: var(--gold-light);
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 20px rgba(184, 145, 58, 0.3);
+      animation: fadeUp 1.2s ease both;
+    }
+
+    .hero h1 {
+      position: relative;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 6vw, 64px);
+      font-weight: 300;
+      color: var(--parchment);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.1;
+      animation: fadeUp 1.2s 0.2s ease both;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+      font-weight: 400;
+    }
+
+    .hero-sub {
+      position: relative;
+      font-family: 'Crimson Pro', serif;
+      font-style: italic;
+      color: rgba(247, 240, 227, 0.55);
+      font-size: 18px;
+      margin-top: 16px;
+      animation: fadeUp 1.2s 0.4s ease both;
+    }
+
+    .hero-divider {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 32px;
+      animation: fadeUp 1.2s 0.5s ease both;
+    }
+
+    .hero-divider::before,
+    .hero-divider::after {
+      content: '';
+      height: 1px;
+      width: 80px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    .hero-divider::after {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .hero-divider span {
+      color: var(--gold);
+      font-size: 14px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-family: 'Cormorant Garamond';
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Intro */
+    .intro-section {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+
+    .intro-section p {
+      font-size: 19px;
+      color: #2e2010;
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    .intro-section p strong {
+      font-style: normal;
+      color: var(--rust);
+    }
+
+    /* Section label */
+    .section-label {
+      text-align: center;
+      padding: 16px 24px 8px;
+      font-family: 'Cormorant Garamond';
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+    }
+
+    /* Element cards */
+    .elements-container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .element-card {
+      position: relative;
+      background: white;
+      border-left: 3px solid var(--gold);
+      margin-bottom: 2px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .element-card:hover {
+      box-shadow: 0 8px 32px rgba(26, 18, 8, 0.18);
+      transform: translateX(2px);
+    }
+
+    .element-card.open {
+      border-left-color: var(--rust);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 28px;
+      background: linear-gradient(135deg, #fffdf9 0%, #fef9f0 100%);
+      user-select: none;
+    }
+
+    .card-number {
+      font-family: 'Cormorant Garamond';
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      color: var(--gold-dim);
+      min-width: 28px;
+      font-weight: 600;
+    }
+
+    .card-title-block {
+      flex: 1;
+    }
+
+    .card-title-ar {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: 20px;
+      color: var(--ink);
+      line-height: 1.4;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .card-title-en {
+      font-family: 'Cormorant Garamond';
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--rust);
+      text-transform: uppercase;
+    }
+
+    .card-phase {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      font-family: 'Cormorant Garamond';
+      text-align: right;
+    }
+
+    .card-toggle {
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 14px;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .element-card.open .card-toggle {
+      background: var(--rust);
+      border-color: var(--rust);
+      color: white;
+      transform: rotate(45deg);
+    }
+
+    .card-body {
+      display: none;
+      padding: 0 28px 32px;
+      background: white;
+      border-top: 1px solid rgba(184, 145, 58, 0.12);
+    }
+
+    .element-card.open .card-body {
+      display: block;
+      animation: expandIn 0.35s ease both;
+    }
+
+    @keyframes expandIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Arabic display */
+    .arabic-block {
+      text-align: center;
+      padding: 28px 20px 20px;
+      position: relative;
+    }
+
+    .arabic-text {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: clamp(22px, 4vw, 32px);
+      color: var(--ink);
+      line-height: 1.8;
+      direction: rtl;
+    }
+
+    .transliteration {
+      font-style: italic;
+      color: var(--gold-dim);
+      font-size: 15px;
+      margin-top: 8px;
+      letter-spacing: 0.03em;
+    }
+
+    /* Translation */
+    .translation-block {
+      background: linear-gradient(135deg, #fdf8ef, #fef6e8);
+      border-left: 2px solid var(--gold-light);
+      padding: 20px 24px;
+      margin: 16px 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .translation-label {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      font-family: 'Cormorant Garamond';
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .translation-text {
+      font-size: 18px;
+      color: #1e1206;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    /* Sections */
+    .impact-block,
+    .khushu-block {
+      margin-top: 20px;
+    }
+
+    .block-heading {
+      font-family: 'Cormorant Garamond';
+      font-size: 13px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--rust);
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .block-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(122, 59, 30, 0.3), transparent);
+    }
+
+    .impact-text {
+      font-size: 17px;
+      color: #2a1a0a;
+      line-height: 1.75;
+    }
+
+    .khushu-tips {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .khushu-tip {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      background: linear-gradient(135deg, #f9f3e8, #fdf8ef);
+      border-radius: 2px;
+      border: 1px solid rgba(184, 145, 58, 0.15);
+    }
+
+    .tip-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .tip-text {
+      font-size: 16px;
+      color: #2a1a0a;
+      line-height: 1.6;
+    }
+
+    /* Footer khushu note */
+    .closing-section {
+      background: var(--ink);
+      padding: 60px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .closing-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 50%, #2d1f08 0%, #080502 100%);
+    }
+
+    .closing-arabic {
+      position: relative;
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: 28px;
+      color: var(--gold-light);
+      margin-bottom: 20px;
+      direction: rtl;
+    }
+
+    .closing-text {
+      position: relative;
+      max-width: 600px;
+      margin: 0 auto;
+      font-style: italic;
+      color: rgba(247, 240, 227, 0.7);
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .card-header {
+        padding: 16px 18px;
+        gap: 12px;
+      }
+
+      .card-body {
+        padding: 0 18px 24px;
+      }
+
+      .arabic-block {
+        padding: 20px 12px 16px;
+      }
+
+      .translation-block {
+        padding: 16px 16px;
+      }
+
+      .card-phase {
+        display: none;
+      }
+    }
+
+    /* Word-by-word Arabic Translation Hover Styles */
+    .ar-word {
+      position: relative;
+      cursor: help;
+      transition: color 0.2s ease, background-color 0.2s ease;
+      display: inline-block;
+      border-bottom: 1px dotted transparent;
+      padding: 0 2px;
+    }
+
+    .ar-word:hover {
+      color: var(--gold-dim);
+      background-color: rgba(184, 145, 58, 0.08);
+      border-radius: 4px;
+      border-bottom-color: var(--gold);
+    }
+
+    /* Deep elegant floating card tooltip */
+    .ar-tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: rgba(26, 18, 8, 0.96);
+      color: var(--parchment);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 12px 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 1px 8px rgba(184, 145, 58, 0.2);
+      z-index: 99999;
+      opacity: 0;
+      transform: translate(-50%, -100%) scale(0.95) translateY(10px);
+      transition: opacity 0.2s cubic-bezier(0.19, 1, 0.22, 1),
+        transform 0.2s cubic-bezier(0.19, 1, 0.22, 1),
+        left 0.12s cubic-bezier(0.19, 1, 0.22, 1),
+        top 0.12s cubic-bezier(0.19, 1, 0.22, 1);
+      max-width: 280px;
+      min-width: 160px;
+      font-family: 'Crimson Pro', Georgia, serif;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .ar-tooltip.visible {
+      opacity: 1;
+      transform: translate(-50%, -100%) scale(1) translateY(-15px);
+    }
+
+    .ar-tooltip-ar {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: 24px;
+      color: var(--gold-light);
+      margin-bottom: 2px;
+      line-height: 1.3;
+    }
+
+    .ar-tooltip-tr {
+      font-family: 'Crimson Pro', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: rgba(247, 240, 227, 0.6);
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .ar-tooltip-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 6px 0 8px;
+    }
+
+    .ar-tooltip-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      color: var(--cream);
+      line-height: 1.4;
+      font-weight: 400;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="hero">
+    <div class="hero-border"></div>
+    <div class="hero-corner tl"></div>
+    <div class="hero-corner tr"></div>
+    <div class="hero-corner bl"></div>
+    <div class="hero-corner br"></div>
+
+    <div class="hero-arabic">الصلاة عمود الدين</div>
+    <h1>The Heart of <em>Namaaz</em></h1>
+    <p class="hero-sub">A contemplative guide to every word, posture, and moment — for Khushū'</p>
+    <div class="hero-divider"><span>✦</span></div>
+  </header>
+
+  <div class="intro-section">
+    <p>
+      Namaaz is not merely ritual movement — it is a <strong>conversation with Allah</strong>. Every word you utter has
+      weight. Every posture carries meaning. This guide walks through each element so you can stand in prayer not just
+      with your body, but with your <strong>full heart and mind present</strong>.
+    </p>
+  </div>
+
+  <p class="section-label">Elements of Prayer — Tap to Contemplate</p>
+
+  <div class="elements-container">
+
+    <!-- 1. Niyyah -->
+    <div class="element-card" onclick="toggle(this)">
+      <div class="card-header">
+        <span class="card-number">01</span>
+        <div class="card-title-block">
+          <span class="card-title-ar">النيّة</span>
+          <span class="card-title-en">Niyyah — The Intention</span>
+        </div>
+        <span class="card-phase">Before Prayer</span>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-block">
+          <div class="arabic-text">نَوَيْتُ أَنْ أُصَلِّيَ لِلَّهِ تَعَالَى</div>
+          <div class="transliteration">Nawaytu an usalli lillāhi ta'ālā</div>
+        </div>
+        <div class="translation-block">
+          <div class="translation-label">Translation</div>
+          <div class="translation-text">"I intend to pray for the sake of Allah, the Most High."</div>
+        </div>
+        <div class="impact-block">
+          <div class="block-heading">Why It Matters</div>
+          <p class="impact-text">Niyyah is the soul of every act. The Prophet ﷺ said: <em>"Actions are by intentions,
+              and every person will get what they intended."</em> Before you lift your hands, you are already in a
+            sacred state — declaring that the next few minutes belong entirely to Allah, not to the world behind you.
+          </p>
+        </div>
+        <div class="khushu-block">
+          <div class="block-heading">How to Approach It</div>
+          <div class="khushu-tips">
+            <div class="khushu-tip"><span class="tip-icon">🌿</span><span class="tip-text">Take one slow breath before
+                raising your hands. In that breath, consciously drop whatever was on your mind — work, stress, phone.
+                Set it down outside the prayer.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">💭</span><span class="tip-text">Ask yourself: "Who am I about
+                to stand before?" Let the gravity of standing before Allah settle in your chest before the first
+                takbeer.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Takbiratul Ihram -->
+    <div class="element-card" onclick="toggle(this)">
+      <div class="card-header">
+        <span class="card-number">02</span>
+        <div class="card-title-block">
+          <span class="card-title-ar">تكبيرة الإحرام</span>
+          <span class="card-title-en">Takbeer — The Opening</span>
+        </div>
+        <span class="card-phase">Qiyaam</span>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-block">
+          <div class="arabic-text">اللَّهُ أَكْبَرُ</div>
+          <div class="transliteration">Allāhu Akbar</div>
+        </div>
+        <div class="translation-block">
+          <div class="translation-label">Translation</div>
+          <div class="translation-text">"Allah is the Greatest." — Greater than everything in existence. Greater than
+            whatever I was just thinking about.</div>
+        </div>
+        <div class="impact-block">
+          <div class="block-heading">Why It Matters</div>
+          <p class="impact-text">This is the gate. The moment you say Allāhu Akbar and raise your hands, the world
+            becomes <em>haraam</em> to you — meaning: you've cut yourself off from it. This is why it's called
+            Takbiratul <em>Ihram</em> (the forbidding takbeer). The hands rising symbolizes releasing the dunya —
+            letting go of everything worldly as you enter the divine presence.</p>
+        </div>
+        <div class="khushu-block">
+          <div class="block-heading">How to Approach It</div>
+          <div class="khushu-tips">
+            <div class="khushu-tip"><span class="tip-icon">🤲</span><span class="tip-text">As you raise your hands,
+                physically imagine pushing the world away. Bills, worries, conversations — all of it gets left behind
+                those raised palms.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">⚖️</span><span class="tip-text">Think: "What am I placing
+                next to Allah right now that seems 'important'?" Name it — then declare it smaller than Him. That's the
+                real meaning of Akbar.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Thana / Opening Dua -->
+    <div class="element-card" onclick="toggle(this)">
+      <div class="card-header">
+        <span class="card-number">03</span>
+        <div class="card-title-block">
+          <span class="card-title-ar">ثناء — دعاء الاستفتاح</span>
+          <span class="card-title-en">Thanaa — Opening Supplication</span>
+        </div>
+        <span class="card-phase">Qiyaam</span>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-block">
+          <div class="arabic-text">سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا
+            إِلَهَ غَيْرُكَ</div>
+          <div class="transliteration">Subhānakallāhumma wa bihamdik, wa tabārakasmuk, wa ta'ālā jadduk, wa lā ilāha
+            ghayruk</div>
+        </div>
+        <div class="translation-block">
+          <div class="translation-label">Translation</div>
+          <div class="translation-text">"Glory be to You, O Allah, and all praise. Blessed is Your Name. Exalted is Your
+            Majesty. And there is no god but You."</div>
+        </div>
+        <div class="impact-block">
+          <div class="block-heading">Why It Matters</div>
+          <p class="impact-text">Before you even begin Surah al-Fatiha, you pause to simply praise Allah — not asking
+            for anything, not reciting a duty, just standing in awe and acknowledging His perfection. It's the
+            equivalent of entering a king's court and first saying: "Your glory is beyond description." It orients your
+            heart before the conversation begins.</p>
+        </div>
+        <div class="khushu-block">
+          <div class="block-heading">How to Approach It</div>
+          <div class="khushu-tips">
+            <div class="khushu-tip"><span class="tip-icon">✨</span><span class="tip-text">"Tabāraka ismuk" — His very
+                Name is full of blessings. Think of how many millions say that Name in this very moment, across the
+                earth. You're part of that.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">🏔️</span><span class="tip-text">"Ta'ālā jadduk" — His
+                Greatness is literally beyond imagination. Let that overwhelm your heart for a second. Not anxiety —
+                awe.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Ta'awwudh & Bismillah -->
+    <div class="element-card" onclick="toggle(this)">
+      <div class="card-header">
+        <span class="card-number">04</span>
+        <div class="card-title-block">
+          <span class="card-title-ar">أعوذ بالله — بسم الله</span>
+          <span class="card-title-en">Seeking Refuge & Bismillah</span>
+        </div>
+        <span class="card-phase">Before Fatiha</span>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-block">
+          <div class="arabic-text">أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ</div>
+          <div class="transliteration">A'ūdhu billāhi min ash-shaytānir-rajeem</div>
+        </div>
+        <div class="translation-block">
+          <div class="translation-label">Translation</div>
+          <div class="translation-text">"I seek refuge in Allah from Shaytaan, the rejected/accursed one."</div>
+        </div>
+        <div class="impact-block">
+          <div class="block-heading">Why It Matters</div>
+          <p class="impact-text">It's deeply telling that even as we begin reciting the words of Allah, we first
+            acknowledge that we need protection from distraction and whispers. Shaytaan's greatest attack is in prayer —
+            making your mind wander, making you forget what you're saying, making it feel like routine. This du'a is
+            your armour. Then Bismillah — "In the Name of Allah" — every good act begins by dedicating it to Him.</p>
+        </div>
+        <div class="khushu-block">
+          <div class="block-heading">How to Approach It</div>
+          <div class="khushu-tips">
+            <div class="khushu-tip"><span class="tip-icon">🛡️</span><span class="tip-text">Say it with real intent — "I
+                am actively asking Allah to guard my focus right now." It's not a formality. You're asking for help
+                staying present.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">🌅</span><span class="tip-text">Bismillah — "With the Name of
+                Allah I begin." This moment of Quran recitation is not your words; you're a vessel carrying His speech.
+                That shift in perspective is humbling.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Surah al-Fatiha -->
+    <div class="element-card" onclick="toggle(this)">
+      <div class="card-header">
+        <span class="card-number">05</span>
+        <div class="card-title-block">
+          <span class="card-title-ar">الفاتحة</span>
+          <span class="card-title-en">Surah al-Fatiha — The Opening Chapter</span>
+        </div>
+        <span class="card-phase">Qiyaam — Core</span>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-block">
+          <div class="arabic-text">
+            ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ مَٰلِكِ يَوْمِ ٱلدِّينِ إِيَّاكَ نَعْبُدُ
+            وَإِيَّاكَ نَسْتَعِينُ ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ
+            ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ
+          </div>
+        </div>
+        <div class="translation-block">
+          <div class="translation-label">Verse by Verse Translation</div>
+          <div class="translation-text">
+            <strong style="color:var(--rust)">All praise belongs to Allah</strong> — not some, not most. ALL of it.
+            Every good thing ever witnessed is ultimately His.<br><br>
+            <strong style="color:var(--rust)">Lord of all the worlds</strong> — not just humans. Every atom, every
+            galaxy, every creature you've seen and haven't seen — He is their Rabb.<br><br>
+            <strong style="color:var(--rust)">The Most Merciful, the Especially Merciful</strong> — Rahmān: His mercy
+            encompasses everything. Raheem: His mercy is specifically, personally directed toward the believers.<br><br>
+            <strong style="color:var(--rust)">Master of the Day of Judgment</strong> — Every power in this world is
+            temporary and borrowed. His ownership of that Day is absolute and permanent.<br><br>
+            <strong style="color:var(--rust)">You alone we worship, and You alone we ask for help</strong> — This is the
+            pivot of the surah. The first 3 ayahs are about Him. This ayah is the conversation — I turn to You, I depend
+            on You.<br><br>
+            <strong style="color:var(--rust)">Guide us to the straight path</strong> — We're asking this 17+ times a
+            day. Not once, not occasionally. Every single rakah. That tells you how desperately we need guidance, and
+            how merciful He is to keep giving it.<br><br>
+            <strong style="color:var(--rust)">The path of those upon whom You have bestowed favour</strong> — We're
+            asking to walk the same path as the Prophets, the truthful, the martyrs, the righteous. To be in their
+            company.<br><br>
+            <strong style="color:var(--rust)">Not of those who earned anger, nor of those who went astray</strong> —
+            We're also asking to be kept away from deviation. It's a complete du'a.
+          </div>
+        </div>
+        <div class="impact-block">
+          <div class="block-heading">The Hidden Miracle</div>
+          <p class="impact-text">Allah said in a hadith Qudsi: <em>"I have divided prayer between Myself and My servant
+              into two halves, and My servant shall have what he asks for."</em> — When you say Al-hamd, Allah responds:
+            "My servant has praised Me." When you say Iyyāka na'budu, He says: "This is between Me and My servant." When
+            you say Ihdinas-siraat, He says: "This is for My servant, and My servant shall have what he asked for."
+            Al-Fatiha is literally a back-and-forth with Allah.</p>
+        </div>
+        <div class="khushu-block">
+          <div class="block-heading">How to Approach It</div>
+          <div class="khushu-tips">
+            <div class="khushu-tip"><span class="tip-icon">💬</span><span class="tip-text">Read it as a conversation,
+                not recitation. After each ayah, pause mentally for Allah's response. You're not performing — you're
+                speaking to Him.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">🤲</span><span class="tip-text">When you reach
+                "Ihdinas-siraat al-mustaqeem" — feel the weight of that request. You're asking for the most important
+                thing in existence: to not go astray. Make it sincere, even desperate.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">🌍</span><span class="tip-text">"Rabb il-'aalameen" — pause
+                and think of the vastness. Mountains, oceans, distant stars, billions of people. He is Rabb of all of
+                it. And He knows your name.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Ruku -->
+    <div class="element-card" onclick="toggle(this)">
+      <div class="card-header">
+        <span class="card-number">06</span>
+        <div class="card-title-block">
+          <span class="card-title-ar">الركوع</span>
+          <span class="card-title-en">Rukū' — The Bowing</span>
+        </div>
+        <span class="card-phase">Posture of Humility</span>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-block">
+          <div class="arabic-text">سُبْحَانَ رَبِّيَ الْعَظِيمِ</div>
+          <div class="transliteration">Subhāna Rabbiy al-'Adheem</div>
+        </div>
+        <div class="translation-block">
+          <div class="translation-label">Translation</div>
+          <div class="translation-text">"Glory be to my Lord, the Most Great / the Magnificent."</div>
+        </div>
+        <div class="impact-block">
+          <div class="block-heading">Why It Matters</div>
+          <p class="impact-text">You've been standing upright — the posture of kings and leaders. Now you bow. The body
+            is making a declaration that the tongue confirms: <em>I submit to something greater than myself.</em> Your
+            head — the seat of your intellect, pride, and identity — now points down. And in that posture you say:
+            "Glory to my Lord, al-'Adheem" — the Immeasurably Great. It is the most fitting thing to say when you are
+            small before Him.</p>
+        </div>
+        <div class="khushu-block">
+          <div class="block-heading">How to Approach It</div>
+          <div class="khushu-tips">
+            <div class="khushu-tip"><span class="tip-icon">🏳️</span><span class="tip-text">Think of something you're
+                proud of — achievement, status, knowledge. Then bow, and say "Glory to my Lord, the Great." Let your
+                body teach your ego something.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">🔁</span><span class="tip-text">Say the tasbih slowly, at
+                least 3 times. Each repetition is not just words — it's your declaration renewed. Don't rush through
+                this posture to get to the next one.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Ruku Rising -->
+    <div class="element-card" onclick="toggle(this)">
+      <div class="card-header">
+        <span class="card-number">07</span>
+        <div class="card-title-block">
+          <span class="card-title-ar">الرفع من الركوع</span>
+          <span class="card-title-en">Rising from Rukū'</span>
+        </div>
+        <span class="card-phase">Transition</span>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-block">
+          <div class="arabic-text">سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ — رَبَّنَا وَلَكَ الْحَمْدُ حَمْدًا كَثِيرًا طَيِّبًا
+            مُبَارَكًا فِيهِ</div>
+          <div class="transliteration">Sami'Allāhu liman hamidah — Rabbanā wa lakal hamd, hamdan katheeran tayyiban
+            mubārakan feeh</div>
+        </div>
+        <div class="translation-block">
+          <div class="translation-label">Translation</div>
+          <div class="translation-text">"Allah hears whoever praises Him." — "Our Lord, and to You belongs all praise —
+            abundant, pure, and blessed praise."</div>
+        </div>
+        <div class="impact-block">
+          <div class="block-heading">Why It Matters</div>
+          <p class="impact-text">"Sami'Allāhu liman hamidah" — this is Allah speaking through our prayer: He hears you.
+            He is listening. And then we respond: "Our Lord, to You belongs ALL praise." This is one of the most
+            beautiful exchanges in the prayer. You're not praising Him into the void — He hears, and you praise, and a
+            conversation happens between the bow and the sujood.</p>
+        </div>
+        <div class="khushu-block">
+          <div class="block-heading">How to Approach It</div>
+          <div class="khushu-tips">
+            <div class="khushu-tip"><span class="tip-icon">👂</span><span class="tip-text">When you say "Sami'Allah" —
+                truly believe He is listening to THIS specific moment of yours. He hears you individually, not as one of
+                billions. That personalness is real.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">🌸</span><span class="tip-text">"Hamdan katheeran tayyiban
+                mubārakan feeh" — praise that is abundant, pure, and blessed. You're not just saying "thanks." You're
+                offering the finest, most sincere gratitude your heart can muster.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. Sujood -->
+    <div class="element-card" onclick="toggle(this)">
+      <div class="card-header">
+        <span class="card-number">08</span>
+        <div class="card-title-block">
+          <span class="card-title-ar">السُّجُود</span>
+          <span class="card-title-en">Sujood — The Prostration</span>
+        </div>
+        <span class="card-phase">The Closest Moment</span>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-block">
+          <div class="arabic-text">سُبْحَانَ رَبِّيَ الْأَعْلَى</div>
+          <div class="transliteration">Subhāna Rabbiy al-A'lā</div>
+        </div>
+        <div class="translation-block">
+          <div class="translation-label">Translation</div>
+          <div class="translation-text">"Glory be to my Lord, the Most High."</div>
+        </div>
+        <div class="impact-block">
+          <div class="block-heading">Why It Matters — The Paradox of Sujood</div>
+          <p class="impact-text">The Prophet ﷺ said: <em>"The closest a servant is to his Lord is when he is in
+              sujood."</em> Here is the paradox — you are in the lowest physical position a human can assume, your
+            forehead touching the earth, the very ground beneath your feet. And in that precise moment, you are the
+            <strong>closest to Allah</strong>. The lowest point is the highest point. The greatest nearness comes
+            through the greatest humility. And in this posture you say: "Glory to my Lord, the Most High" — you are low,
+            He is High, and somehow in that difference, you are closest to Him.
+          </p>
+        </div>
+        <div class="khushu-block">
+          <div class="block-heading">How to Approach It</div>
+          <div class="khushu-tips">
+            <div class="khushu-tip"><span class="tip-icon">🌙</span><span class="tip-text">Don't rush sujood. This is
+                the prime real estate of prayer. Make du'a here — in your own language if needed. You're as close as
+                you'll get in this dunya. Use it.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">🌱</span><span class="tip-text">Your forehead — the place of
+                intellect and pride — is on the ground. What is your ego, your status, your intelligence in this moment?
+                Nothing. And that nothingness is the most beautiful thing you can offer.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">💧</span><span class="tip-text">If your heart ever feels
+                hard, stay longer in sujood. The scholars say: the heart softens closest to the ground. If tears come,
+                let them.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. Between Sujoods -->
+    <div class="element-card" onclick="toggle(this)">
+      <div class="card-header">
+        <span class="card-number">09</span>
+        <div class="card-title-block">
+          <span class="card-title-ar">الجلسة بين السجدتين</span>
+          <span class="card-title-en">Sitting Between Two Sujoods</span>
+        </div>
+        <span class="card-phase">Brief Dua</span>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-block">
+          <div class="arabic-text">رَبِّ اغْفِرْ لِي، وَارْحَمْنِي، وَاجْبُرْنِي، وَارْفَعْنِي، وَارْزُقْنِي،
+            وَاهْدِنِي، وَعَافِنِي</div>
+          <div class="transliteration">Rabb-ighfirlee, warhamnee, wajburnee, warfa'nee, warzuqnee, wahdinee, wa 'aafinee
+          </div>
+        </div>
+        <div class="translation-block">
+          <div class="translation-label">Translation</div>
+          <div class="translation-text">"My Lord, forgive me. Have mercy on me. Mend my affairs. Elevate me. Provide for
+            me. Guide me. And grant me wellbeing."</div>
+        </div>
+        <div class="impact-block">
+          <div class="block-heading">Why It Matters</div>
+          <p class="impact-text">In a single brief sitting, seven of the most comprehensive requests a human soul can
+            make are compressed into a few words: forgiveness, mercy, repair, elevation, provision, guidance, and
+            health. This sitting is short — but immensely loaded. It's a complete life's prayer packed between two
+            prostrations.</p>
+        </div>
+        <div class="khushu-block">
+          <div class="block-heading">How to Approach It</div>
+          <div class="khushu-tips">
+            <div class="khushu-tip"><span class="tip-icon">🔧</span><span class="tip-text">"Wajburnee" (mend my affairs)
+                — think of something broken in your life right now. A relationship, a weakness, a habit. You're asking
+                Allah to fix it. Name it internally as you say it.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">🌿</span><span class="tip-text">These seven requests cover
+                deen AND dunya — you're not just asking for spiritual things. Rizq, 'aafiyah — these are worldly needs.
+                Islam sees no separation between your prayer and your everyday life.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. Tashahhud -->
+    <div class="element-card" onclick="toggle(this)">
+      <div class="card-header">
+        <span class="card-number">10</span>
+        <div class="card-title-block">
+          <span class="card-title-ar">التشهد</span>
+          <span class="card-title-en">Tashahhud — The Testimony</span>
+        </div>
+        <span class="card-phase">Qa'dah</span>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-block">
+          <div class="arabic-text">التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا
+            النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ،
+            أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ</div>
+        </div>
+        <div class="translation-block">
+          <div class="translation-label">Translation</div>
+          <div class="translation-text">
+            "All verbal salutations, all acts of worship, and all good things belong to Allah. Peace be upon you, O
+            Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous servants of
+            Allah. I bear witness that there is no god except Allah, and I bear witness that Muhammad is His servant and
+            messenger."
+          </div>
+        </div>
+        <div class="impact-block">
+          <div class="block-heading">Why It Matters</div>
+          <p class="impact-text">The scholars say the Tashahhud re-enacts the Mi'raaj — the night journey when the
+            Prophet ﷺ ascended to the heavens and greeted Allah. Allah responded. Then the Prophet greeted all believers
+            and the righteous. It's a cosmic conversation compressed into a few lines. And when you say the Shahada in
+            this sitting, it is not a mere affirmation — it's a testimony, a witnessing, from your own soul.</p>
+        </div>
+        <div class="khushu-block">
+          <div class="block-heading">How to Approach It</div>
+          <div class="khushu-tips">
+            <div class="khushu-tip"><span class="tip-icon">✉️</span><span class="tip-text">"As-salamu 'alayka
+                ayyuhan-Nabi" — you're sending salam directly to the Prophet ﷺ and he receives it. This is not
+                metaphorical. Feel the connection across time.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">☝️</span><span class="tip-text">When you raise your finger at
+                "lā ilāha illallāh" — that single finger raised is a declaration: One God. In a world of a million
+                distractions and false lords, you point to the One. Let it feel like that.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">🤝</span><span class="tip-text">"As-salamu 'alaynā wa 'alā
+                'ibādillāh is-sāliheen" — your salam reaches every righteous servant across all time. You are connected
+                to an ummah of billions, past and present.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. Durood -->
+    <div class="element-card" onclick="toggle(this)">
+      <div class="card-header">
+        <span class="card-number">11</span>
+        <div class="card-title-block">
+          <span class="card-title-ar">الصلاة الإبراهيمية</span>
+          <span class="card-title-en">Durood Ibrāheemi — Sending Blessings</span>
+        </div>
+        <span class="card-phase">Qa'dah Akheerah</span>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-block">
+          <div class="arabic-text">اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى
+            إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ</div>
+        </div>
+        <div class="translation-block">
+          <div class="translation-label">Translation</div>
+          <div class="translation-text">"O Allah, send blessings upon Muhammad and upon the family of Muhammad, just as
+            You sent blessings upon Ibrāheem and upon the family of Ibrāheem. Truly, You are Praiseworthy and Glorious."
+          </div>
+        </div>
+        <div class="impact-block">
+          <div class="block-heading">Why It Matters</div>
+          <p class="impact-text">After the Tashahhud, before you end the prayer, you pause to send blessings on the
+            Prophet ﷺ — the person through whom the prayer itself came to you. Every rakah, every posture, every word
+            was taught to the ummah through him. This is an expression of love and gratitude. And in return, the Prophet
+            ﷺ said: "Whoever sends one salutation upon me, Allah sends ten upon him." You give one; you receive ten.</p>
+        </div>
+        <div class="khushu-block">
+          <div class="block-heading">How to Approach It</div>
+          <div class="khushu-tips">
+            <div class="khushu-tip"><span class="tip-icon">❤️</span><span class="tip-text">Say it with genuine love. The
+                Prophet ﷺ sacrificed everything to deliver this deen to you. The prayer you're in — he taught it. Feel
+                gratitude as you say his name.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">🕌</span><span class="tip-text">Think of Ibrāheem (AS) — the
+                father of monotheism, who built the Ka'bah. You're asking Allah to honour our Prophet ﷺ the way He
+                honoured that great patriarch. The lineage of prophethood runs through your prayer.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12. Final Du'a & Salaam -->
+    <div class="element-card" onclick="toggle(this)">
+      <div class="card-header">
+        <span class="card-number">12</span>
+        <div class="card-title-block">
+          <span class="card-title-ar">الدُّعاء والسلام</span>
+          <span class="card-title-en">Final Du'a & the Salaam</span>
+        </div>
+        <span class="card-phase">Closing</span>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-block">
+          <div class="arabic-text">السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ</div>
+          <div class="transliteration">As-salāmu 'alaykum wa rahmatullāh</div>
+        </div>
+        <div class="translation-block">
+          <div class="translation-label">Translation</div>
+          <div class="translation-text">"Peace be upon you and the mercy of Allah." — said while turning right, then
+            left.</div>
+        </div>
+        <div class="impact-block">
+          <div class="block-heading">The Final Du'a Before Salaam</div>
+          <p class="impact-text">Before the salaam, in the last sitting, you can make personal du'a — this is one of the
+            most powerful moments for accepted supplications. The Prophet ﷺ taught: <em>"Then let him ask for whatever
+              he wishes of the matters of this world and the hereafter."</em> Then the salaam — you turn right and left,
+            greeting the angels who record your deeds, and symbolically returning from the divine presence back to the
+            world — carrying the light of what just happened.</p>
+        </div>
+        <div class="khushu-block">
+          <div class="block-heading">How to Approach It</div>
+          <div class="khushu-tips">
+            <div class="khushu-tip"><span class="tip-icon">📿</span><span class="tip-text">The du'a before salaam is
+                sacred time. Have a short personal list ready — something for yourself, for your family, for the ummah.
+                Don't leave without making it.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">🕊️</span><span class="tip-text">As you say salaam and end
+                the prayer, don't leap up immediately. Sit for a moment. You just had an audience with Allah. The
+                transition back deserves at least a breath of gratitude.</span></div>
+            <div class="khushu-tip"><span class="tip-icon">🌟</span><span class="tip-text">The salaam to both sides
+                acknowledges the angels. You're not alone in prayer — you are witnessed, and that record is kept. Your
+                prayer mattered enough to be recorded.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="closing-section">
+    <div class="closing-arabic">إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ</div>
+    <p class="closing-text">
+      "Indeed, prayer prohibits immorality and wrongdoing." — (Al-Ankabut: 45)<br><br>
+      When namaaz is prayed with presence, it doesn't just end with the salaam. It changes how you walk back into the
+      world.
+      May Allah grant us all <em>khushū'</em> — that profound, trembling, loving presence in prayer.
+      <br><br>آمين
+    </p>
+  </div>
+
+  <script>
+    function toggle(card) {
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.element-card.open').forEach(c => c.classList.remove('open'));
+      if (!isOpen) {
+        card.classList.add('open');
+        setTimeout(() => {
+          const offset = card.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: offset, behavior: 'smooth' });
+        }, 50);
+      }
+    }
+
+    // --- Word-by-Word Arabic Translation Feature ---
+    const arabicDict = {
+      // Hero & Headers
+      "الصلاة": { tr: "As-Salāh", en: "The Prayer" },
+      "عمود": { tr: "'Amūd", en: "Pillar" },
+      "الدين": { tr: "ad-Dīn", en: "Religion / Way of Life" },
+
+      // Niyyah
+      "نَوَيْتُ": { tr: "Nawaytu", en: "I intend / I intended" },
+      "أَنْ": { tr: "an", en: "to / that" },
+      "أُصَلِّيَ": { tr: "usalliya", en: "I pray / perform prayer" },
+      "لِلَّهِ": { tr: "lillāhi", en: "for Allah" },
+      "تَعَالَى": { tr: "ta'ālā", en: "the Most High / Exalted" },
+
+      // Card titles and headings
+      "النيّة": { tr: "An-Niyyah", en: "The Intention" },
+      "تكبيرة": { tr: "Takbīrah", en: "Magnification (declaring greatness)" },
+      "الإحرام": { tr: "al-Ihrām", en: "Sanctification (making forbidden)" },
+      "ثناء": { tr: "Thanā'", en: "Praise / Glorification" },
+      "دعاء": { tr: "Du'ā'", en: "Supplication / Prayer" },
+      "الاستفتاح": { tr: "al-Istiftāh", en: "The Opening / Beginning" },
+      "أعوذ": { tr: "A'ūdhu", en: "I seek refuge" },
+      "بالله": { tr: "billāh", en: "in Allah" },
+      "بسم": { tr: "Bismillah", en: "In the Name of Allah" },
+      "الله": { tr: "Allāh", en: "God / Allah" },
+      "الفاتحة": { tr: "al-Fātihah", en: "The Opening / Key" },
+      "الركوع": { tr: "ar-Rukū'", en: "The Bowing" },
+      "الرفع": { tr: "ar-Raf'", en: "The Rising" },
+      "من": { tr: "min", en: "from" },
+      "السُّجُود": { tr: "as-Sujūd", en: "The Prostration" },
+      "الجلسة": { tr: "al-Jalsah", en: "The Sitting" },
+      "بين": { tr: "bayna", en: "between" },
+      "السجدتين": { tr: "as-Sajdatayn", en: "the two prostrations" },
+      "التشهد": { tr: "at-Tashahhud", en: "The Testimony" },
+      "الإبراهيمية": { tr: "al-Ibrāhīmiyyah", en: "Abrahamic" },
+      "الدُّعاء": { tr: "ad-Du'ā'", en: "The Supplication" },
+      "والسلام": { tr: "was-Salām", en: "and the Peace" },
+
+      // Takbeer
+      "اللَّهُ": { tr: "Allāhu", en: "Allah" },
+      "أَكْبَرُ": { tr: "Akbar", en: "Greatest / Greater" },
+
+      // Thanaa
+      "سُبْحَانَكَ": { tr: "Subhānak", en: "Glory be to You" },
+      "اللَّهُمَّ": { tr: "Allāhumma", en: "O Allah" },
+      "وَبِحَمْدِكَ": { tr: "wa bihamdik", en: "and with Your praise" },
+      "وَتَبَارَكَ": { tr: "wa tabāraka", en: "and blessed is" },
+      "اسْمُكَ": { tr: "usmuk", en: "Your name" },
+      "وَتَعَالَى": { tr: "wa ta'ālā", en: "and exalted is" },
+      "جَدُّكَ": { tr: "jadduk", en: "Your majesty / glory" },
+      "وَلَا": { tr: "wa lā", en: "and there is no" },
+      "إِلَهَ": { tr: "ilāha", en: "god / deity" },
+      "غَيْرُكَ": { tr: "ghayruk", en: "other than You" },
+
+      // Seek Refuge
+      "أَعُوذُ": { tr: "A'ūdhu", en: "I seek refuge" },
+      "بِاللَّهِ": { tr: "billāhi", en: "in Allah" },
+      "مِنَ": { tr: "mina", en: "from" },
+      "الشَّيْطَانِ": { tr: "ash-Shaytāni", en: "Shaytaan (the Devil)" },
+      "الرَّجِيمِ": { tr: "ar-rajeem", en: "the rejected / accursed" },
+
+      // Fatiha
+      "ٱلْحَمْدُ": { tr: "al-Hamdu", en: "All praise / thanks" },
+      "لِلَّهِ": { tr: "lillāhi", en: "for Allah" },
+      "رَبِّ": { tr: "Rabbi", en: "Lord / Sustainer" },
+      "ٱلْعَٰلَمِينَ": { tr: "al-'ālamīn", en: "of the worlds / universe" },
+      "ٱلرَّحْمَٰنِ": { tr: "ar-Rahmān", en: "the Most Merciful" },
+      "ٱلرَّحِيمِ": { tr: "ar-Rahīm", en: "the Especially Merciful" },
+      "مَٰلِكِ": { tr: "Māliki", en: "Master / Owner / King" },
+      "يَوْمِ": { tr: "Yawmi", en: "of the Day" },
+      "ٱلدِّينِ": { tr: "ad-Dīn", en: "of Judgment / Recompense" },
+      "إِيَّاكَ": { tr: "Iyyāka", en: "You alone" },
+      "نَعْبُدُ": { tr: "na'budu", en: "we worship" },
+      "وَإِيَّاكَ": { tr: "wa iyyāka", en: "and You alone" },
+      "نَسْتَعِينُ": { tr: "nasta'īn", en: "we ask for help" },
+      "ٱهْدِنَا": { tr: "Ihdinā", en: "Guide us" },
+      "ٱلصِّرَٰطَ": { tr: "as-sirāt", en: "the path / way" },
+      "ٱلْمُسْتَقِيمَ": { tr: "al-mustaqīm", en: "the straight / upright" },
+      "صِرَٰطَ": { tr: "sirāt", en: "the path of" },
+      "ٱلَّذِينَ": { tr: "alladhīna", en: "those who" },
+      "أَنْعَمْتَ": { tr: "an'amta", en: "You have bestowed favour" },
+      "عَلَيْهِمْ": { tr: "alayhim", en: "upon them" },
+      "غَيْرِ": { tr: "ghayri", en: "not [of] / other than" },
+      "ٱلْمَغْضُوبِ": { tr: "al-maghdūbi", en: "those who earned anger / wrath" },
+      "ٱلضَّآلِّينَ": { tr: "ad-dāllīn", en: "those who go astray / are lost" },
+
+      // Ruku
+      "سُبْحَانَ": { tr: "Subhāna", en: "Glory be to / Glory is to" },
+      "رَبِّيَ": { tr: "Rabbiy", en: "my Lord" },
+      "الْعَظِيمِ": { tr: "al-'Adheem", en: "the Most Great / Magnificent" },
+
+      // Rising from Ruku
+      "سَمِعَ": { tr: "Sami'a", en: "He hears / heard" },
+      "حَمِدَهُ": { tr: "hamidah", en: "praises Him" },
+      "رَبَّنَا": { tr: "Rabbanā", en: "Our Lord" },
+      "وَلَكَ": { tr: "wa laka", en: "and to You" },
+      "الْحَمْدُ": { tr: "al-hamd", en: "all praise" },
+      "حَمْدًا": { tr: "hamdan", en: "praise" },
+      "كَثِيرًا": { tr: "katheeran", en: "abundant / many" },
+      "طَيِّبًا": { tr: "tayyiban", en: "pure / good" },
+      "مُبَارَكًا": { tr: "mubārakan", en: "blessed" },
+      "فِيهِ": { tr: "feeh", en: "in it" },
+
+      // Sujood
+      "الْأَعْلَى": { tr: "al-A'lā", en: "the Most High / Supreme" },
+
+      // Between Sujood
+      "اغْفِرْ": { tr: "ighfir", en: "forgive" },
+      "لِي": { tr: "lee", en: "[for] me" },
+      "وَارْحَمْنِي": { tr: "warhamnee", en: "and have mercy on me" },
+      "وَاجْبُرْنِي": { tr: "wajburnee", en: "and mend/strengthen my affairs" },
+      "وَارْفَعْنِي": { tr: "warfa'nee", en: "and elevate me" },
+      "وَارْزُقْنِي": { tr: "warzuqnee", en: "and provide for me" },
+      "وَاهْدِنِي": { tr: "wahdinee", en: "and guide me" },
+      "وَعَافِنِي": { tr: "wa 'aafinee", en: "and grant me well-being/health" },
+
+      // Tashahhud
+      "التَّحِيَّاتُ": { tr: "At-Tahiyyāt", en: "All verbal greetings / salutations" },
+      "وَالصَّلَاوَاتُ": { tr: "was-Salawāt", en: "and all prayers / acts of worship" },
+      "وَالطَّيِّبَاتُ": { tr: "wat-Tayyibāt", en: "and all good things / pure deeds" },
+      "السَّلَامُ": { tr: "As-Salām", en: "Peace" },
+      "عَلَيْكَ": { tr: "alayka", en: "be upon you" },
+      "أَيُّهَا": { tr: "ayyuhan", en: "O" },
+      "النَّبِيُّ": { tr: "Nabiyyu", en: "Prophet" },
+      "وَرَحْمَةُ": { tr: "wa rahmatu", en: "and the mercy" },
+      "وَبَرَكَاتُهُ": { tr: "wa barakātuhu", en: "and His blessings" },
+      "عَلَيْنَا": { tr: "alaynā", en: "be upon us" },
+      "وَعَلَى": { tr: "wa 'alā", en: "and upon" },
+      "عِبَادِ": { tr: "ibādi", en: "the servants" },
+      "الصَّالِحِينَ": { tr: "as-Sālihīn", en: "the righteous" },
+      "أَشْهَدُ": { tr: "Ashhadu", en: "I bear witness / testify" },
+      "إِلَّا": { tr: "illā", en: "except" },
+      "وَأَشْهَدُ": { tr: "wa ashhadu", en: "and I bear witness" },
+      "أَنَّ": { tr: "anna", en: "that" },
+      "مُحَمَّدًا": { tr: "Muhammadan", en: "Muhammad" },
+      "عَبْدُهُ": { tr: "abduhu", en: "is His servant" },
+      "وَرَسُولُهُ": { tr: "wa rasūluhu", en: "and His messenger" },
+
+      // Durood
+      "صَلِّ": { tr: "salli", en: "send blessings / grace" },
+      "مُحَمَّدٍ": { tr: "Muhammadin", en: "Muhammad" },
+      "آلِ": { tr: "āli", en: "the family / followers" },
+      "كَمَا": { tr: "kamā", en: "just as" },
+      "صَلَّيْتَ": { tr: "sallayta", en: "You sent blessings" },
+      "إِبْرَاهِيمَ": { tr: "Ibrāhīma", en: "Abraham" },
+      "إِنَّكَ": { tr: "innaka", en: "indeed You are" },
+      "حَمِيدٌ": { tr: "Hamīdun", en: "Praiseworthy" },
+      "مَجِيدٌ": { tr: "Majīdun", en: "Glorious" },
+
+      // Salaam
+      "عَلَيْكُمْ": { tr: "alaykum", en: "be upon you" },
+
+      // Closing
+      "إِنَّ": { tr: "Inna", en: "Indeed / Surely" },
+      "الصَّلَاةَ": { tr: "as-Salāh", en: "the prayer" },
+      "تَنْهَىٰ": { tr: "tanhā", en: "prohibits / keeps away [from]" },
+      "عَنِ": { tr: "ani", en: "from" },
+      "الْفَحْشَاءِ": { tr: "al-fahshā'", en: "immorality / shameful deeds" },
+      "وَالْمُنكَرِ": { tr: "wal-munkar", en: "and wrongdoing / evil deeds" }
+    };
+
+    function cleanWord(word) {
+      return word.replace(/[،,.\-—؛;!?()\[\]]/g, '').trim();
+    }
+
+    function stripHarakat(text) {
+      return text.replace(/[\u064B-\u0652\u0670\u200c]/g, '');
+    }
+
+    // Pre-populate stripped dictionary for fast fallback lookup
+    const cleanKeysDict = {};
+    for (let key in arabicDict) {
+      cleanKeysDict[stripHarakat(key)] = arabicDict[key];
+    }
+
+    function lookupWord(word) {
+      const cleaned = cleanWord(word);
+      if (!cleaned) return null;
+
+      // 1. Direct match
+      if (arabicDict[cleaned]) {
+        return arabicDict[cleaned];
+      }
+      // 2. Stripped match
+      const stripped = stripHarakat(cleaned);
+      if (cleanKeysDict[stripped]) {
+        return cleanKeysDict[stripped];
+      }
+      return null;
+    }
+
+    function wrapArabicTextInElement(element) {
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+      const textNodes = [];
+      let node;
+      while (node = walker.nextNode()) {
+        if (node.parentNode && node.parentNode.classList.contains('ar-word')) {
+          continue;
+        }
+        textNodes.push(node);
+      }
+
+      textNodes.forEach(textNode => {
+        const parent = textNode.parentNode;
+        if (!parent) return;
+
+        const text = textNode.nodeValue;
+        const parts = text.split(/(\s+)/);
+        const fragment = document.createDocumentFragment();
+
+        parts.forEach(part => {
+          if (part.trim() === '') {
+            fragment.appendChild(document.createTextNode(part));
+            return;
+          }
+
+          // Match Arabic script words
+          const match = part.match(/^([^\u0600-\u06FF]*)([\u0600-\u06FF\u0670\u200c]+)([^\u0600-\u06FF]*)$/);
+          if (match) {
+            const prefix = match[1];
+            const arabicWord = match[2];
+            const suffix = match[3];
+
+            if (prefix) fragment.appendChild(document.createTextNode(prefix));
+
+            const cleaned = cleanWord(arabicWord);
+            const hasTranslation = lookupWord(cleaned);
+
+            if (hasTranslation) {
+              const span = document.createElement('span');
+              span.className = 'ar-word';
+              span.textContent = arabicWord;
+              span.setAttribute('data-word', cleaned);
+              fragment.appendChild(span);
+            } else {
+              fragment.appendChild(document.createTextNode(arabicWord));
+            }
+
+            if (suffix) fragment.appendChild(document.createTextNode(suffix));
+          } else {
+            fragment.appendChild(document.createTextNode(part));
+          }
+        });
+
+        parent.replaceChild(fragment, textNode);
+      });
+    }
+
+    // Initialize word wrapping
+    document.addEventListener('DOMContentLoaded', () => {
+      // Select all elements containing Arabic text
+      const selectors = ['.arabic-text', '.hero-arabic', '.closing-arabic', '.card-title-ar'];
+      selectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(el => {
+          wrapArabicTextInElement(el);
+        });
+      });
+
+      // Create custom tooltip
+      const tooltip = document.createElement('div');
+      tooltip.className = 'ar-tooltip';
+      document.body.appendChild(tooltip);
+
+      // Touch devices fire a synthetic mouseover + click right after touchend,
+      // which used to make the tooltip flash on and immediately toggle back off.
+      // This flag lets hover logic step aside once we know we're on a touch device,
+      // so tapping is handled by the dedicated touch logic below instead.
+      let isTouchDevice = false;
+      document.addEventListener('touchstart', () => { isTouchDevice = true; }, { passive: true });
+
+      function renderTooltipContent(rawWord, match) {
+        tooltip.innerHTML = `
+          <div class="ar-tooltip-ar">${rawWord}</div>
+          <div class="ar-tooltip-tr">${match.tr}</div>
+          <div class="ar-tooltip-divider"></div>
+          <div class="ar-tooltip-en">${match.en}</div>
+        `;
+      }
+
+      // Position the tooltip centered above a given word element (used for taps)
+      function positionTooltipAtElement(wordSpan) {
+        const rect = wordSpan.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top;
+
+        const padding = 15;
+        const tooltipWidth = tooltip.offsetWidth || 200;
+        const halfWidth = tooltipWidth / 2;
+        let left = x;
+        if (left - halfWidth < padding) left = halfWidth + padding;
+        else if (left + halfWidth > window.innerWidth - padding) left = window.innerWidth - padding - halfWidth;
+
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${y}px`;
+      }
+
+      // Event delegation for hovers (desktop / mouse only)
+      document.addEventListener('mouseover', (e) => {
+        if (isTouchDevice) return;
+        const wordSpan = e.target.closest('.ar-word');
+        if (!wordSpan) return;
+
+        const rawWord = wordSpan.textContent;
+        const match = lookupWord(rawWord);
+
+        if (match) {
+          renderTooltipContent(rawWord, match);
+          positionTooltip(e);
+          tooltip.classList.add('visible');
+        }
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (isTouchDevice) return;
+        if (tooltip.classList.contains('visible')) {
+          positionTooltip(e);
+        }
+      });
+
+      document.addEventListener('mouseout', (e) => {
+        if (isTouchDevice) return;
+        const wordSpan = e.target.closest('.ar-word');
+        if (!wordSpan) return;
+        tooltip.classList.remove('visible');
+      });
+
+      // Event delegation for taps (mobile & touch devices)
+      // Uses touchend directly (rather than the synthetic click Android/iOS fire
+      // afterwards) so there's no double-handling or tooltip flicker.
+      document.addEventListener('touchend', (e) => {
+        const wordSpan = e.target.closest('.ar-word');
+
+        if (wordSpan) {
+          e.preventDefault(); // stop the synthetic mouseover/click that would follow
+          e.stopPropagation(); // prevent card toggling underneath the word
+
+          const rawWord = wordSpan.textContent;
+          const match = lookupWord(rawWord);
+          if (!match) return;
+
+          const alreadyShowingThisWord =
+            tooltip.classList.contains('visible') &&
+            tooltip.querySelector('.ar-tooltip-ar')?.textContent === rawWord;
+
+          if (alreadyShowingThisWord) {
+            tooltip.classList.remove('visible');
+          } else {
+            renderTooltipContent(rawWord, match);
+            positionTooltipAtElement(wordSpan);
+            tooltip.classList.add('visible');
+          }
+        } else if (!e.target.closest('.ar-tooltip')) {
+          // Tap outside a word (and outside the tooltip itself) hides the tooltip
+          tooltip.classList.remove('visible');
+        }
+      }, { passive: false });
+
+      // Fallback click handling for devices that support click but not touch
+      // events (e.g. some hybrid laptops using a stylus/mouse in touch mode).
+      document.addEventListener('click', (e) => {
+        if (isTouchDevice) return; // touchend already handled it above
+        const wordSpan = e.target.closest('.ar-word');
+        if (!wordSpan) {
+          tooltip.classList.remove('visible');
+        }
+      });
+
+      function positionTooltip(e) {
+        if (!e.clientX) return;
+
+        const padding = 15;
+        const tooltipWidth = tooltip.offsetWidth || 200;
+        const halfWidth = tooltipWidth / 2;
+
+        let left = e.clientX;
+        if (left - halfWidth < padding) {
+          left = halfWidth + padding;
+        } else if (left + halfWidth > window.innerWidth - padding) {
+          left = window.innerWidth - padding - halfWidth;
+        }
+
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${e.clientY}px`;
+      }
+    });
+  </script>
+
+</body>
+
+</html>
