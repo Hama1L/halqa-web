@@ -20,6 +20,7 @@ export interface Answer {
   id: string;
   body: string;
   upvotes: number;
+  upvotedByMe: boolean;
   createdAt: string;
   author: PublicAuthor;
 }
@@ -28,6 +29,13 @@ export interface AyahSnapshot {
   number: number;
   arabic: string;
   translation: string;
+}
+
+export interface InsightComment {
+  id: string;
+  body: string;
+  createdAt: string;
+  author: PublicAuthor;
 }
 
 export interface Insight {
@@ -39,6 +47,9 @@ export interface Insight {
   ayahs: AyahSnapshot[];
   insightText: string;
   likes: number;
+  likedByMe: boolean;
+  commentsCount: number;
+  comments?: InsightComment[];
   createdAt: string;
   author: PublicAuthor;
 }

@@ -1,5 +1,6 @@
 import AnswerForm from "./AnswerForm";
 import { Question } from "@/lib/types";
+import UpvoteButton from "@/components/UpvoteButton";
 
 async function getQuestion(id: string): Promise<Question | null> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/questions/${id}`, { cache: "no-store" });
@@ -28,11 +29,14 @@ export default async function QuestionDetailPage({ params }: { params: { questio
       <div className="flex flex-col gap-3 mb-6">
         {question.answers?.map((a) => (
           <div key={a.id} className="rounded-xl p-4" style={{ background: "#FFFCF5", border: "1px solid #EFE9DB" }}>
-            <span className="text-[11px] font-medium" style={{ color: a.author.isAnonymous ? "#9C9483" : "#123832" }}>
-              {a.author.displayName}
-            </span>
-            <p className="text-sm leading-relaxed mt-1" style={{ color: "#1E2521" }}>{a.body}</p>
-          </div>
+  <div className="flex items-center justify-between mb-1">
+    <span className="text-[11px] font-medium" style={{ color: a.author.isAnonymous ? "#9C9483" : "#123832" }}>
+      {a.author.displayName}
+    </span>
+    <UpvoteButton answerId={a.id} initialUpvotes={a.upvotes} initialUpvotedByMe={a.upvotedByMe} />
+  </div>
+  <p className="text-sm leading-relaxed mt-1" style={{ color: "#1E2521" }}>{a.body}</p>
+</div>
         ))}
       </div>
 
