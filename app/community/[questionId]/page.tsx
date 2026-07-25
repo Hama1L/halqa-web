@@ -8,8 +8,11 @@ async function getQuestion(id: string): Promise<Question | null> {
   return res.json();
 }
 
-export default async function QuestionDetailPage({ params }: { params: { questionId: string } }) {
-  const question = await getQuestion(params.questionId);
+export default async function QuestionDetailPage({ params }:  {
+  params: Promise<{ questionId: string }>;
+} ) {
+  const { questionId } = await params;
+  const question = await getQuestion(questionId);
   if (!question) return <p className="pt-6 text-sm" style={{ color: "#9C9483" }}>Question not found.</p>;
 
   return (

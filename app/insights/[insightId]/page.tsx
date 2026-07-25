@@ -11,8 +11,11 @@ async function getInsight(id: string): Promise<Insight | null> {
   return res.json();
 }
 
-export default async function InsightDetailPage({ params }: { params: { insightId: string } }) {
-  const insight = await getInsight(params.insightId);
+export default async function InsightDetailPage({ params }:  {
+  params: Promise<{ insightId: string }>;
+} ) {
+   const { insightId } = await params;
+   const insight = await getInsight(insightId);
   if (!insight) return <p className="pt-6 text-sm" style={{ color: "#9C9483" }}>Insight not found.</p>;
 
   return (
