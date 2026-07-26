@@ -3,9 +3,13 @@ import { AuthProvider } from "@/lib/auth-context";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 
-export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Halqa — a circle for reflection",
+  description: "Find solace in Quranic wisdom and community reflections.",
+  icons: {
+    icon: "/favicon.ico", // Standard browser favicon
+    apple: "/apple-touch-icon.png", // 👈 Apple Home Screen Bookmark Icon
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
