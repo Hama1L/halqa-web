@@ -3,12 +3,19 @@ import { AuthProvider } from "@/lib/auth-context";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 
+const svgIcon = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%231A1A1A'/><rect y='30' width='100' height='15' fill='%23D9C98A'/><rect x='20' y='45' width='15' height='55' fill='%23D9C98A'/></svg>`;
 export const metadata: Metadata = {
   title: "Halqa — a circle for reflection",
   description: "Find solace in Quranic wisdom and community reflections.",
   icons: {
-    icon: "/favicon.ico", // Standard browser favicon
-    apple: "/apple-touch-icon.png", // 👈 Apple Home Screen Bookmark Icon
+    icon: [
+      {
+        url: svgIcon,
+        type: "image/svg+xml",
+      },
+    ],
+    // Optional: Keep apple-touch-icon as PNG if you have one, as iOS Home Screen bookmarks prefer physical PNG files
+    apple: "/apple-touch-icon.png", 
   },
 };
 
