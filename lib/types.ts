@@ -61,3 +61,34 @@ export interface Me {
   role: "USER" | "MODERATOR" | "ADMIN";
   createdAt: string;
 }
+
+export interface MyQuestion {
+  id: string;
+  title: string;
+  status: "OPEN" | "ANSWERED" | "CLOSED";
+  isAnonymous: boolean;
+  isRemoved: boolean;
+  createdAt: string;
+}
+
+export interface MyAnswer {
+  id: string;
+  body: string;
+  isAnonymous: boolean;
+  isRemoved: boolean;
+  createdAt: string;
+  question: { id: string; title: string };
+}
+
+export interface MyInsight {
+  id: string;
+  surahName: string;
+  ayahStart: number;
+  ayahEnd: number;
+  insightText: string;
+  isAnonymous: boolean;
+  isRemoved: boolean;
+  likes: number;
+  commentsCount: number;
+  createdAt: string;
+}
