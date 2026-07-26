@@ -2,6 +2,7 @@ import LikeButton from "@/components/LikeButton";
 import InsightComments from "@/components/InsightComments";
 import { Insight } from "@/lib/types";
 
+export const dynamic = "force-dynamic";
 async function getInsight(id: string): Promise<Insight | null> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${id}`, {
     cache: "no-store",

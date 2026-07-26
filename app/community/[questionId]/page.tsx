@@ -2,6 +2,7 @@ import AnswerForm from "./AnswerForm";
 import { Question } from "@/lib/types";
 import UpvoteButton from "@/components/UpvoteButton";
 
+export const dynamic = "force-dynamic";
 async function getQuestion(id: string): Promise<Question | null> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/questions/${id}`, { cache: "no-store" });
   if (!res.ok) return null;

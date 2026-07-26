@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Question } from "@/lib/types";
 
+export const dynamic = "force-dynamic";
 async function getQuestions(): Promise<Question[]> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/questions`, { cache: "no-store" });
   if (!res.ok) return [];

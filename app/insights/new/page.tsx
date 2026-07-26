@@ -7,6 +7,8 @@ import AnonToggle from "@/components/AnonToggle";
 import AyahPicker from "@/components/AyahPicker";
 import { Insight } from "@/lib/types";
 
+export const dynamic = "force-dynamic";
+
 export default function NewInsightPage() {
   const router = useRouter();
   const [selection, setSelection] = useState<{ surahNumber: number; ayahStart: number; ayahEnd: number } | null>(null);

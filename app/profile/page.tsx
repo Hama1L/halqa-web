@@ -6,6 +6,7 @@ import { EyeOff, ShieldAlert } from "lucide-react";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
 import { MyQuestion, MyAnswer, MyInsight } from "@/lib/types";
+export const dynamic = "force-dynamic";
 
 type Tab = "questions" | "answers" | "insights";
 

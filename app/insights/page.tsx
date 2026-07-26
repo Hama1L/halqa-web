@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Insight } from "@/lib/types";
 
+export const dynamic = "force-dynamic";
+
 async function getInsights(): Promise<Insight[]> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights`, { cache: "no-store" });
   if (!res.ok) return [];

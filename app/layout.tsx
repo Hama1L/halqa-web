@@ -3,6 +3,7 @@ import { AuthProvider } from "@/lib/auth-context";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Halqa — a circle for reflection",
 };
