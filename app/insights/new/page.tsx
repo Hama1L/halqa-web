@@ -1,22 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import { useRouter } from "next/navigation";
 import { api, ApiError } from "@/lib/api";
 import AnonToggle from "@/components/AnonToggle";
 import AyahPicker from "@/components/AyahPicker";
 import { Insight } from "@/lib/types";
+import { useAuth } from "@/lib/auth-context";
 
 export const dynamic = "force-dynamic";
 
 export default function NewInsightPage() {
   const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const [selection, setSelection] = useState<{ surahNumber: number; ayahStart: number; ayahEnd: number } | null>(null);
   const [insightText, setInsightText] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/login?redirectTo=/insights/new");
+    }
+  }, [authLoading, user, router]);
   const canSubmit = selection && insightText.trim().length >= 10;
 
   const submit = async (e: React.FormEvent) => {
@@ -39,6 +46,7 @@ export default function NewInsightPage() {
       setLoading(false);
     }
   };
+   if (authLoading || !user) return null;
 
   return (
     <div className="pt-2">

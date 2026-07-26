@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { EyeOff, ShieldAlert } from "lucide-react";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
 import { MyQuestion, MyAnswer, MyInsight } from "@/lib/types";
-export const dynamic = "force-dynamic";
 
 type Tab = "questions" | "answers" | "insights";
 
@@ -27,6 +27,7 @@ function RemovedBadge() {
 }
 
 export default function ProfilePage() {
+  const router = useRouter();
   const { user, loading: authLoading } = useAuth();
   const [tab, setTab] = useState<Tab>("questions");
   const [questions, setQuestions] = useState<MyQuestion[]>([]);
@@ -34,6 +35,12 @@ export default function ProfilePage() {
   const [insights, setInsights] = useState<MyInsight[]>([]);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/login?redirectTo=/profile");
+    }
+  }, [authLoading, user, router]);
+  
   useEffect(() => {
     if (authLoading || !user) return;
     Promise.all([

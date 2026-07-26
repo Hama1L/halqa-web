@@ -1,16 +1,24 @@
 "use client";
 export const dynamic = "force-dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api, ApiError } from "@/lib/api";
 import AnonToggle from "@/components/AnonToggle";
+import { useAuth } from "@/lib/auth-context";
 
 export default function AnswerForm({ questionId }: { questionId: string }) {
   const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const [body, setBody] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/login?redirectTo=/community/" + questionId);
+    }
+  }, [authLoading, user, router]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +34,7 @@ export default function AnswerForm({ questionId }: { questionId: string }) {
       setLoading(false);
     }
   };
-
+  if (authLoading || !user) return null;
   return (
     <form onSubmit={submit} className="flex flex-col gap-3">
       <AnonToggle isAnonymous={isAnonymous} onChange={setIsAnonymous} />

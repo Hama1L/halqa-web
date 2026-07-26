@@ -1,20 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api, ApiError } from "@/lib/api";
 import AnonToggle from "@/components/AnonToggle";
 import { Question } from "@/lib/types";
+import { useAuth } from "@/lib/auth-context";
 
 export const dynamic = "force-dynamic";
 export default function AskPage() {
   const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [tags, setTags] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(true);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/login?redirectTo=/community/ask");
+    }
+  }, [authLoading, user, router]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +42,8 @@ export default function AskPage() {
       setLoading(false);
     }
   };
+
+  if (authLoading || !user) return null;
 
   return (
     <div className="pt-2">
