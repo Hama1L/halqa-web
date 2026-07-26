@@ -1,5 +1,5 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"; // default to localhost for development
-
+// const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"; // default to localhost for development
+const API_URL = "/api";
 class ApiError extends Error {
   constructor(public status: number, message: string) {
     super(message);
