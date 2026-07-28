@@ -312,6 +312,21 @@ export default function HomePage() {
                 <ChevronRight size={16} />
               </Link>
             </div>
+              <div className="rounded-xl p-4 flex items-center justify-between transition-shadow hover:shadow-sm" style={{ background: "#FFFCF5", border: "1px solid #EAE3D3" }}>
+    <div className="flex items-center gap-3">
+      <div className="p-2.5 rounded-xl" style={{ background: "#FBF3E1", color: "#B8933D" }}>
+        <BookOpen size={20} />
+      </div>
+      <div>
+        <h3 className="text-xs font-bold" style={{ color: "#123832" }}>The Qur'an</h3>
+        <p className="text-[11px] mt-0.5" style={{ color: "#8A7E68" }}>Read with translation, and see insights shared on each Ayah.</p>
+      </div>
+    </div>
+    <Link href="/quran" className="p-1.5 rounded-full" style={{ background: "#EDE7D8", color: "#123832" }}>
+      <ChevronRight size={16} />
+    </Link>
+  </div>
+
 
             {/* Community & Insights Card */}
             <div className="rounded-xl p-4 flex items-center justify-between transition-shadow hover:shadow-sm" style={{ background: "#FFFCF5", border: "1px solid #EAE3D3" }}>
