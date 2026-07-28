@@ -2,13 +2,14 @@
 
 import { useEffect, useState, useRef } from "react";
 import { api } from "@/lib/api";
-import { AyahSnapshot } from "@/lib/types";
+import { AyahSnapshot,SurahMeta } from "@/lib/types";
 
-interface SurahMeta {
-  number: number;
-  name: string;
-  englishName: string;
-  numberOfAyahs: number;
+
+interface AyahPickerProps {
+  onChange: (value: { surahNumber: number; ayahStart: number; ayahEnd: number; surahName: string } | null) => void;
+  initialSurahNumber?: number;
+  initialAyahStart?: number;
+  initialAyahEnd?: number;
 }
 
 interface AyahPickerProps {
@@ -17,11 +18,11 @@ interface AyahPickerProps {
 
 const MAX_RANGE = 10;
 
-export default function AyahPicker({ onChange }: AyahPickerProps) {
+export default function AyahPicker({ onChange, initialSurahNumber, initialAyahStart, initialAyahEnd }: AyahPickerProps) {
   const [surahs, setSurahs] = useState<SurahMeta[]>([]);
-  const [surahNumber, setSurahNumber] = useState<number | null>(null);
-  const [ayahStart, setAyahStart] = useState<number>(1);
-  const [ayahEnd, setAyahEnd] = useState<number>(1);
+  const [surahNumber, setSurahNumber] = useState<number | null>(initialSurahNumber ?? null);
+  const [ayahStart, setAyahStart] = useState<number>(initialAyahStart ?? 1);
+  const [ayahEnd, setAyahEnd] = useState<number>(initialAyahEnd ?? 1);
   const [preview, setPreview] = useState<AyahSnapshot[]>([]);
   const [loadingPreview, setLoadingPreview] = useState(false);
   const [error, setError] = useState("");

@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/auth-context";
 
 const LINKS = [
   { href: "/", label: "Home" },
+  { href: "/quran", label: "Qur'an" },
   { href: "/community", label: "Community" },
   { href: "/insights", label: "Insights" },
   { href: "/namaaz", label: "Namaaz Guide" },

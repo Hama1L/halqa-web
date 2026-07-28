@@ -1,18 +1,26 @@
 "use client";
 
-import { useState ,useEffect} from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { api, ApiError } from "@/lib/api";
+import { useAuth } from "@/lib/auth-context";
 import AnonToggle from "@/components/AnonToggle";
 import AyahPicker from "@/components/AyahPicker";
 import { Insight } from "@/lib/types";
-import { useAuth } from "@/lib/auth-context";
 
 export const dynamic = "force-dynamic";
 
-export default function NewInsightPage() {
+function NewInsightForm() {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { user, loading: authLoading } = useAuth();
+
+  const prefillSurah = searchParams.get("surah");
+  const prefillAyah = searchParams.get("ayah");
+  const initialSurahNumber = prefillSurah ? parseInt(prefillSurah, 10) : undefined;
+  const initialAyahStart = prefillAyah ? parseInt(prefillAyah, 10) : undefined;
+
   const [selection, setSelection] = useState<{ surahNumber: number; ayahStart: number; ayahEnd: number } | null>(null);
   const [insightText, setInsightText] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
@@ -21,9 +29,12 @@ export default function NewInsightPage() {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      router.push("/login?redirectTo=/insights/new");
+      const query = searchParams.toString();
+      const redirectTo = query ? `${pathname}?${query}` : pathname;
+      router.push(`/login?redirectTo=${encodeURIComponent(redirectTo)}`);
     }
-  }, [authLoading, user, router]);
+  }, [authLoading, user, router, pathname, searchParams]);
+
   const canSubmit = selection && insightText.trim().length >= 10;
 
   const submit = async (e: React.FormEvent) => {
@@ -46,7 +57,8 @@ export default function NewInsightPage() {
       setLoading(false);
     }
   };
-   if (authLoading || !user) return null;
+
+  if (authLoading || !user) return null;
 
   return (
     <div className="pt-2">
@@ -57,7 +69,12 @@ export default function NewInsightPage() {
       <form onSubmit={submit} className="flex flex-col gap-3">
         <AnonToggle isAnonymous={isAnonymous} onChange={setIsAnonymous} />
 
-        <AyahPicker onChange={setSelection} />
+        <AyahPicker
+          onChange={setSelection}
+          initialSurahNumber={initialSurahNumber}
+          initialAyahStart={initialAyahStart}
+          initialAyahEnd={initialAyahStart}
+        />
 
         <textarea
           required
@@ -86,5 +103,13 @@ export default function NewInsightPage() {
         </button>
       </form>
     </div>
+  );
+}
+
+export default function NewInsightPage() {
+  return (
+    <Suspense fallback={null}>
+      <NewInsightForm />
+    </Suspense>
   );
 }

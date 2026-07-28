@@ -92,3 +92,21 @@ export interface MyInsight {
   commentsCount: number;
   createdAt: string;
 }
+
+export interface SurahMeta {
+  number: number;
+  name: string;
+  englishName: string;
+  numberOfAyahs: number;
+}
+
+export interface SurahAyahFull {
+  number: number;
+  arabic: string;
+  translation: string;
+}
+
+export interface SurahDetail {
+  meta: SurahMeta;
+  ayahs: SurahAyahFull[];
+}
