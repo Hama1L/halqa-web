@@ -1,12 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { MessageSquareQuote, PenLine } from "lucide-react";
 import { SurahDetail, Insight } from "@/lib/types";
 
 export default function QuranReader({ surah, insights }: { surah: SurahDetail; insights: Insight[] }) {
   const [openAyah, setOpenAyah] = useState<number | null>(null);
+  const [highlightedAyah, setHighlightedAyah] = useState<number | null>(null);
+
+  useEffect(() => {
+    const hash = window.location.hash; // e.g. "#ayah-153"
+    const match = hash.match(/^#ayah-(\d+)$/);
+    if (!match) return;
+
+    const ayahNumber = parseInt(match[1], 10);
+    const el = document.getElementById(`ayah-${ayahNumber}`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      setHighlightedAyah(ayahNumber);
+      const timer = setTimeout(() => setHighlightedAyah(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   const insightsForAyah = (ayahNumber: number) =>
     insights.filter((i) => ayahNumber >= i.ayahStart && ayahNumber <= i.ayahEnd);
@@ -22,11 +38,16 @@ export default function QuranReader({ surah, insights }: { surah: SurahDetail; i
         {surah.ayahs.map((a) => {
           const matches = insightsForAyah(a.number);
           const isOpen = openAyah === a.number;
+          const isHighlighted = highlightedAyah === a.number;
           return (
             <div
               key={a.number}
-              className="px-4 py-3"
-              style={{ borderBottom: "1px solid #EFE9DB" }}
+              id={`ayah-${a.number}`}
+              className="px-4 py-3 transition-colors duration-700"
+              style={{
+                borderBottom: "1px solid #EFE9DB",
+                background: isHighlighted ? "#FBF3E1" : "transparent",
+              }}
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[11px] font-semibold" style={{ color: "#B8933D" }}>

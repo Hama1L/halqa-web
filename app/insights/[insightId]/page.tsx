@@ -1,8 +1,11 @@
+import Link from "next/link";
+import { BookOpen } from "lucide-react";
 import LikeButton from "@/components/LikeButton";
 import InsightComments from "@/components/InsightComments";
 import { Insight } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
+
 async function getInsight(id: string): Promise<Insight | null> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${id}`, {
     cache: "no-store",
@@ -12,11 +15,9 @@ async function getInsight(id: string): Promise<Insight | null> {
   return res.json();
 }
 
-export default async function InsightDetailPage({ params }:  {
-  params: Promise<{ insightId: string }>;
-} ) {
-   const { insightId } = await params;
-   const insight = await getInsight(insightId);
+export default async function InsightDetailPage({ params }: { params: Promise<{ insightId: string }> }) {
+  const { insightId } = await params;
+  const insight = await getInsight(insightId);
   if (!insight) return <p className="pt-6 text-sm" style={{ color: "#9C9483" }}>Insight not found.</p>;
 
   return (
@@ -39,6 +40,14 @@ export default async function InsightDetailPage({ params }:  {
             <p className="text-sm leading-relaxed" style={{ color: "#7A7364" }}>{a.translation}</p>
           </div>
         ))}
+
+        <Link
+          href={`/quran/${insight.surahNumber}#ayah-${insight.ayahStart}`}
+          className="inline-flex items-center gap-1.5 text-[11px] font-medium px-3 py-1.5 rounded-full mt-3"
+          style={{ background: "#F7F2E7", color: "#123832" }}
+        >
+          <BookOpen size={12} /> View in Qur'an
+        </Link>
       </div>
 
       <div className="rounded-xl p-5 mb-3" style={{ background: "#FFFCF5", border: "1px solid #EFE9DB" }}>

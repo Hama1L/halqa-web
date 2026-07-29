@@ -1,4 +1,5 @@
 import Link from "next/link";
+import QuranSearch from "@/components/QuranSearch";
 import { SurahMeta } from "@/lib/types";
 
 async function getSurahs(): Promise<SurahMeta[]> {
@@ -12,9 +13,12 @@ export default async function QuranPage() {
 
   return (
     <div className="pt-2">
-      <h2 className="text-xl font-bold mb-4" style={{ fontFamily: "'Amiri', serif", color: "#123832" }}>
-        The Qur'an
-      </h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-bold" style={{ fontFamily: "'Amiri', serif", color: "#123832" }}>
+          The Qur'an
+        </h2>
+        <QuranSearch surahs={surahs} />
+      </div>
       <div className="flex flex-col gap-2">
         {surahs.map((s) => (
           <Link
