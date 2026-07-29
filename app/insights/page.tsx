@@ -13,7 +13,25 @@ export default async function InsightsPage() {
   const insights = await getInsights();
 
   return (
-    <div className="pt-2">
+    <div className="pt-2 relative">
+      
+      {/* 
+        The Owl GIF 
+        Make sure to update the src to your exact file name, e.g., "/owl.gif" 
+      */}
+      <img 
+        src="tea.gif" 
+        alt="Wise Owl" 
+        className="pointer-events-none"
+        style={{ 
+          position: "absolute",
+          top: -2,    // Adjust to perch it perfectly on the header
+          left: 70,  // Placed just to the left of the "Ask something" button
+          width: 36,   // Adjust based on your GIF's actual size
+          zIndex: 10,
+          filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.06))" // Optional cozy shadow
+        }} 
+      />
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold" style={{ fontFamily: "'Amiri', serif", color: "#123832" }}>
           Insights

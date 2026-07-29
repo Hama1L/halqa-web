@@ -12,7 +12,25 @@ export default async function CommunityPage() {
   const questions = await getQuestions();
 
   return (
-    <div className="pt-2">
+    <div className="pt-2 relative">
+      
+      {/* 
+        The Owl GIF 
+        Make sure to update the src to your exact file name, e.g., "/owl.gif" 
+      */}
+      <img 
+        src="/owl.gif" 
+        alt="Wise Owl" 
+        className="pointer-events-none"
+        style={{ 
+          position: "absolute",
+          top: -5,    // Adjust to perch it perfectly on the header
+          left: 120,  // Placed just to the left of the "Ask something" button
+          width: 36,   // Adjust based on your GIF's actual size
+          zIndex: 10,
+          filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.06))" // Optional cozy shadow
+        }} 
+      />
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold" style={{ fontFamily: "'Amiri', serif", color: "#123832" }}>
           Community
