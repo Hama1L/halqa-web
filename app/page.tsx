@@ -100,6 +100,167 @@ function LatticeDivider() {
   );
 }
 
+// --- PIXEL CAT SPRITE (curled sleeping cat, VS Code Pets style) ---
+// Each row is a 16-char string. Legend:
+// '.' transparent  'k' outline  'b' body fur  'e' closed eye  'p' inner ear (pink)  'w' belly patch
+const CAT_SPRITE: string[] = [
+ "................",
+  "...kk...kk......",
+  "..kpkk.kpkk.....",
+  ".kbbbbkbbbbk....",
+  "kbbbbbbbbbbbk...",
+  "kbbebbbpebbbk...", 
+  "kbbbbbbbbbbbbkk.", 
+  ".kbbbbwwbbbbbbbk", 
+  "..kkkkkkkkkkbbbk", 
+  "...........kbk..", 
+  "............kbk.", 
+  "............kwk.", 
+  "............kk..", 
+  "................",
+  "................",
+  "................",
+];
+
+type PixelCatPalette = {
+  body: string;
+  outline: string;
+  ear: string;
+  belly: string;
+};
+
+const CAT_PALETTES: Record<string, PixelCatPalette> = {
+  tabby: { body: "#D98E4A", outline: "#5A3A1E", ear: "#F3B7A0", belly: "#FBF3E1" },
+  cream: { body: "#EDE0C4", outline: "#8A7250", ear: "#F0C9C0", belly: "#FFFCF5" },
+  smoke: { body: "#8B8F94", outline: "#3A3D40", ear: "#D9AFC0", belly: "#EFEFEF" },
+  moonlight: { body: "#D9C98A", outline: "#4B4331", ear: "#F0DFC0", belly: "#F7F2E7" },
+};
+
+type PixelCatProps = {
+  palette?: keyof typeof CAT_PALETTES;
+  size?: number;
+  flip?: boolean;
+  delay?: number;
+  style?: React.CSSProperties;
+};
+
+function PixelCat({ palette = "tabby", size = 56, flip = false, delay = 0, style }: PixelCatProps) {
+  const colors = CAT_PALETTES[palette];
+  const cell = 1; // grid unit
+  const cols = CAT_SPRITE[0].length;
+  const rows = CAT_SPRITE.length;
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        width: size,
+        height: size * (rows / cols),
+        transform: flip ? "scaleX(-1)" : undefined,
+        pointerEvents: "none",
+        zIndex: 5,
+        ...style,
+      }}
+    >
+      <svg
+        viewBox={`0 0 ${cols} ${rows}`}
+        width={size}
+        height={size * (rows / cols)}
+        shapeRendering="crispEdges"
+        style={{
+          display: "block",
+          overflow: "visible",
+          animation: "pixelCatBreathe 3.2s ease-in-out infinite",
+          animationDelay: `${delay}s`,
+          transformOrigin: "50% 85%",
+        }}
+      >
+        {CAT_SPRITE.map((row, y) =>
+          row.split("").map((ch, x) => {
+            if (ch === ".") return null;
+            const fill =
+              ch === "k" ? colors.outline :
+              ch === "b" ? colors.body :
+              ch === "e" ? colors.outline :
+              ch === "p" ? colors.ear :
+              ch === "w" ? colors.belly : "transparent";
+            return (
+              <rect
+                key={`${x}-${y}`}
+                x={x * cell}
+                y={y * cell}
+                width={cell}
+                height={cell}
+                fill={fill}
+              />
+            );
+          })
+        )}
+      </svg>
+
+      <span className="cat-zzz cat-zzz-1" style={{ color: colors.outline }}>z</span>
+      <span className="cat-zzz cat-zzz-2" style={{ color: colors.outline }}>Z</span>
+    </div>
+  );
+}
+
+function CatStyles() {
+  return (
+    <style>{`
+     @keyframes walkToEdge {
+  /* Start at the left edge (16px padding to match your layout) */
+  0% { left: 16px; transform: scaleX(-1); }
+  
+  /* Walk exactly to the right edge of the card */
+  45% { left: calc(100% - 56px); transform: scaleX(-1); } 
+  
+  /* Turn around */
+  50% { left: calc(100% - 56px); transform: scaleX(1); } 
+  
+  /* Walk back to the start */
+  95% { left: 16px; transform: scaleX(1); } 
+  
+  /* Ready to go again */
+  100% { left: 16px; transform: scaleX(-1); } 
+}
+
+.animate-crab {
+  animation: walkToEdge 12s linear infinite;
+  will-change: left, transform;
+}
+      @keyframes pixelCatBreathe {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+      @keyframes zzzFloat {
+        0% { opacity: 0; transform: translate(0, 4px) scale(0.7); }
+        25% { opacity: 1; }
+        100% { opacity: 0; transform: translate(6px, -18px) scale(1.15); }
+      }
+      .cat-zzz {
+        position: absolute;
+        top: -8px;
+        right: 4px;
+        font-family: 'Amiri', serif;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 1;
+        opacity: 0;
+      }
+      .cat-zzz-1 { animation: zzzFloat 2.6s ease-in-out infinite; }
+      .cat-zzz-2 {
+        top: -12px;
+        right: -4px;
+        font-size: 9px;
+        animation: zzzFloat 2.6s ease-in-out infinite;
+        animation-delay: 0.9s;
+      }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+      .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
+    `}</style>
+  );
+}
+
 function VersesResultCard({ mood, ayah, hadith, status, onReset }: any) {
   const Icon = mood.icon;
   return (
@@ -212,15 +373,15 @@ export default function HomePage() {
   return (
     <div className="min-h-screen w-full flex justify-center" style={{ background: "#F7F2E7" }}>
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');`}</style>
-      
+      <CatStyles />
+
       <div className="w-full max-w-md pb-12" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
-        
-       
 
         <main className="px-4 space-y-6">
-          
-          {/* Hero Section */}
-          <section className="text-center pt-2 pb-1">
+
+          {/* Hero Section — no cat here, kept clean */}
+          <section className="relative text-center pt-2 pb-1">
+             
             <h2 className="text-xl font-semibold mb-1" style={{ color: "#123832", fontFamily: "'Amiri', serif" }}>
               Reflect, Seek & Pray Without Judgment
             </h2>
@@ -229,8 +390,35 @@ export default function HomePage() {
             </p>
           </section>
 
-          {/* Interactive Mood & Daily Selection */}
-          <section className="rounded-2xl p-4" style={{ background: "#FFFCF5", border: "1px solid #EAE3D3" }}>
+          {/* Interactive Mood & Daily Selection — tabby cat curled on the corner */}
+          <section className="rounded-2xl p-4" style={{ background: "#FFFCF5", border: "1px solid #EAE3D3", position: "relative", overflow: "visible" }}>
+            
+            <img 
+    src="/Cat.gif" 
+    alt="Resting Cat" 
+    className="pointer-events-none"
+    style={{ 
+      position: "absolute", 
+      top: -30,   // Negative value pulls it up onto the border
+      left: -1,   // Distance from the left edge
+      width: 80,  // Size of the cat
+      zIndex: 10,
+      filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.08))" // Optional: adds a soft shadow
+    }} 
+  />
+            <img 
+    src="/cat_butter.gif" 
+    alt="Resting Cat" 
+    className="pointer-events-none"
+    style={{ 
+      position: "absolute", 
+      top: -66,   // Negative value pulls it up onto the border
+      right: 5,   // Distance from the left edge
+      width: 70,  // Size of the cat
+      zIndex: 10,
+      filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.08))" // Optional: adds a soft shadow
+    }} 
+  />
             <div className="mb-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider" style={{ color: "#123832" }}>
@@ -297,8 +485,21 @@ export default function HomePage() {
               Explore Halqa
             </span>
 
-            {/* Namaaz Guidance Card */}
-            <div className="rounded-xl p-4 flex items-center justify-between transition-shadow hover:shadow-sm" style={{ background: "#FFFCF5", border: "1px solid #EAE3D3" }}>
+            {/* Namaaz Guidance Card — smoke-grey cat napping on the corner */}
+            <div className="rounded-xl p-4 flex items-center justify-between transition-shadow hover:shadow-sm" style={{ background: "#FFFCF5", border: "1px solid #EAE3D3", position: "relative", overflow: "visible" }}>
+              <img 
+    src="/cat_walk.gif" 
+    alt="Cat Walking" 
+    className="pointer-events-none animate-crab"
+    style={{ 
+      position: "absolute", 
+      top: -37,  // This will now perfectly overlap the top of this section
+        // Adjusted to align with the left edge
+width: 40, 
+      zIndex: 10
+    }} 
+  />
+              
               <div className="flex items-center gap-3">
                 <div className="p-2.5 rounded-xl" style={{ background: "#EEF3EE", color: "#5F7A63" }}>
                   <Clock size={20} />
@@ -312,21 +513,28 @@ export default function HomePage() {
                 <ChevronRight size={16} />
               </Link>
             </div>
-              <div className="rounded-xl p-4 flex items-center justify-between transition-shadow hover:shadow-sm" style={{ background: "#FFFCF5", border: "1px solid #EAE3D3" }}>
-    <div className="flex items-center gap-3">
-      <div className="p-2.5 rounded-xl" style={{ background: "#FBF3E1", color: "#B8933D" }}>
-        <BookOpen size={20} />
-      </div>
-      <div>
-        <h3 className="text-xs font-bold" style={{ color: "#123832" }}>The Qur'an</h3>
-        <p className="text-[11px] mt-0.5" style={{ color: "#8A7E68" }}>Read with translation, and see insights shared on each Ayah.</p>
-      </div>
-    </div>
-    <Link href="/quran" className="p-1.5 rounded-full" style={{ background: "#EDE7D8", color: "#123832" }}>
-      <ChevronRight size={16} />
-    </Link>
-  </div>
+           {/* The Qur'an Card — Walking crab on the top edge */}
+<div className="rounded-xl p-4 mt-4 flex items-center justify-between transition-shadow hover:shadow-sm" style={{ background: "#FFFCF5", border: "1px solid #EAE3D3", position: "relative", overflow: "visible" }}>
+  
+  {/* 
+    Ensure your file is named exactly like this in your public folder. 
+    The 'animate-crab' class applies the walking movement.
+  */}
+ 
 
+  <div className="flex items-center gap-3">
+    <div className="p-2.5 rounded-xl z-10" style={{ background: "#FBF3E1", color: "#B8933D" }}>
+      <BookOpen size={20} />
+    </div>
+    <div className="z-10">
+      <h3 className="text-xs font-bold" style={{ color: "#123832" }}>The Qur'an</h3>
+      <p className="text-[11px] mt-0.5" style={{ color: "#8A7E68" }}>Read with translation, and see insights shared on each Ayah.</p>
+    </div>
+  </div>
+  <Link href="/quran" className="p-1.5 rounded-full z-10 relative" style={{ background: "#EDE7D8", color: "#123832" }}>
+    <ChevronRight size={16} />
+  </Link>
+</div>
 
             {/* Community & Insights Card */}
             <div className="rounded-xl p-4 flex items-center justify-between transition-shadow hover:shadow-sm" style={{ background: "#FFFCF5", border: "1px solid #EAE3D3" }}>
@@ -344,8 +552,9 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Safe Space Banner */}
-            <div className="rounded-xl p-4 flex items-start gap-3" style={{ background: "#123832", color: "#F7F2E7" }}>
+            {/* Safe Space Banner — moonlight cat dozing in the corner */}
+            <div className="rounded-xl p-4 flex items-start gap-3" style={{ background: "#123832", color: "#F7F2E7", position: "relative", overflow: "visible" }}>
+              <PixelCat palette="moonlight" size={40} flip delay={1.2} style={{ top: -12, left: -6 }} />
               <ShieldCheck size={22} className="shrink-0 mt-0.5 text-[#D9C98A]" />
               <div>
                 <h4 className="text-xs font-bold text-[#F0E4BE]">A Safe & Gentle Circle</h4>
