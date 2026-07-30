@@ -15,11 +15,11 @@ type NavLink = {
 // You can leave it completely empty (or remove the property) if a button shouldn't have one.
 const LINKS : NavLink[] = [
   { href: "/", label: "Home", gif: "/Cat_Home.gif" },
-  { href: "/quran", label: "Qur'an", gif: "/turtlee.gif",assetStyle : { position : "absolute" , top : -28 , left : "50%" , width : 36 , zIndex: 10 , transition : "opacity 0.2s ease" } },
-  { href: "/community", label: "Community", gif: "/panda.gif",assetStyle : { position : "absolute" , top : -17 , left : "50%" , width : 19 , zIndex: 10 , transition : "opacity 0.2s ease" } },
-  { href: "/insights", label: "Insights", gif: "/snail.gif" , assetStyle : { position : "absolute" , top : -40 , left : "60%" , width : 40 , zIndex: 10 , transition : "opacity 0.2s ease" } },
-  { href: "/namaaz", label: "Namaaz Guide", gif: "/white_fox.gif", assetStyle : { position : "absolute" , top : -20 , left : "50%" , width : 26 , zIndex: 10 , transition : "opacity 0.2s ease" } },
-  { href: "/prayer-times", label: "Namaaz Times" ,gif: "/red_fox.gif" ,assetStyle : { position : "absolute" , top : -20 , left : "50%" , width : 26 , zIndex: 10 , transition : "opacity 0.2s ease" } }, // No GIF here as an example
+  { href: "/quran", label: "Qur'an", gif: "/turtlee.gif",assetStyle : { position : "absolute" , top : -45 , left : "50%" , width : 60 , zIndex: 10 , transition : "opacity 0.2s ease" } },
+  { href: "/community", label: "Community", gif: "/panda.gif",assetStyle : { position : "absolute" , top : -24 , left : "50%" , width : 30 , zIndex: 10 , transition : "opacity 0.2s ease" } },
+  { href: "/insights", label: "Insights", gif: "/snail.gif" , assetStyle : { position : "absolute" , top : -60 , left : "60%" , width : 60 , zIndex: 10 , transition : "opacity 0.2s ease" } },
+  { href: "/namaaz", label: "Namaaz Guide", gif: "/white_fox.gif", assetStyle : { position : "absolute" , top : -31 , left : "50%" , width : 40 , zIndex: 10 , transition : "opacity 0.2s ease" } },
+  { href: "/prayer-times", label: "Namaaz Times" ,gif: "/red_fox.gif" ,assetStyle : { position : "absolute" , top : -31 , left : "50%" , width : 40 , zIndex: 10 , transition : "opacity 0.2s ease" } }, // No GIF here as an example
 ];
 
 export default function Navbar() {
@@ -116,10 +116,10 @@ export default function Navbar() {
                     className="pointer-events-none"
                     style={{
                       position: "absolute",
-                      top: -18, // Pushes it right above the pill
+                      top: -24, // Pushes it right above the pill
                       left: "50%",
                       transform: "translateX(-50%)", // Perfectly centers it regardless of word length
-                      width: 30, // Keep it small so the navbar doesn't feel cluttered
+                      width: 40, // Keep it small so the navbar doesn't feel cluttered
                       zIndex: 10,
                       // Optional: If you only want the GIF to show on the ACTIVE tab, uncomment the line below:
                       // opacity: active ? 1 : 0, 

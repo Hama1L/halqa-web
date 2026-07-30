@@ -399,9 +399,9 @@ export default function HomePage() {
     className="pointer-events-none"
     style={{ 
       position: "absolute", 
-      top: -30,   // Negative value pulls it up onto the border
+      top: -24,   // Negative value pulls it up onto the border
       left: -1,   // Distance from the left edge
-      width: 80,  // Size of the cat
+      width: 60,  // Size of the cat
       zIndex: 10,
       filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.08))" // Optional: adds a soft shadow
     }} 
@@ -412,9 +412,9 @@ export default function HomePage() {
     className="pointer-events-none"
     style={{ 
       position: "absolute", 
-      top: -66,   // Negative value pulls it up onto the border
+      top: -55,   // Negative value pulls it up onto the border
       right: 5,   // Distance from the left edge
-      width: 70,  // Size of the cat
+      width: 60,  // Size of the cat
       zIndex: 10,
       filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.08))" // Optional: adds a soft shadow
     }} 
