@@ -9,17 +9,16 @@ type NavLink = {
   href: string;
   label: string;
   gif?: string;
-  assetStyle?: CSSProperties; // <-- This is the magic line that fixes the error!
+  assetStyle?: CSSProperties;
 };
-// 1. Add your GIF paths here. 
-// You can leave it completely empty (or remove the property) if a button shouldn't have one.
-const LINKS : NavLink[] = [
+
+const LINKS: NavLink[] = [
   { href: "/", label: "Home", gif: "/Cat_Home.gif" },
-  { href: "/quran", label: "Qur'an", gif: "/turtlee.gif",assetStyle : { position : "absolute" , top : -45 , left : "50%" , width : 60 , zIndex: 10 , transition : "opacity 0.2s ease" } },
-  { href: "/community", label: "Community", gif: "/panda.gif",assetStyle : { position : "absolute" , top : -24 , left : "50%" , width : 30 , zIndex: 10 , transition : "opacity 0.2s ease" } },
-  { href: "/insights", label: "Insights", gif: "/snail.gif" , assetStyle : { position : "absolute" , top : -60 , left : "60%" , width : 60 , zIndex: 10 , transition : "opacity 0.2s ease" } },
-  { href: "/namaaz", label: "Namaaz Guide", gif: "/white_fox.gif", assetStyle : { position : "absolute" , top : -31 , left : "50%" , width : 40 , zIndex: 10 , transition : "opacity 0.2s ease" } },
-  { href: "/prayer-times", label: "Namaaz Times" ,gif: "/red_fox.gif" ,assetStyle : { position : "absolute" , top : -31 , left : "50%" , width : 40 , zIndex: 10 , transition : "opacity 0.2s ease" } }, // No GIF here as an example
+  { href: "/quran", label: "Qur'an", gif: "/turtlee.gif", assetStyle: { position: "absolute", top: -45, left: "50%", width: 60, zIndex: 10, transition: "opacity 0.2s ease" } },
+  { href: "/community", label: "Community", gif: "/panda.gif", assetStyle: { position: "absolute", top: -24, left: "50%", width: 30, zIndex: 10, transition: "opacity 0.2s ease" } },
+  { href: "/insights", label: "Insights", gif: "/snail.gif", assetStyle: { position: "absolute", top: -60, left: "60%", width: 60, zIndex: 10, transition: "opacity 0.2s ease" } },
+  { href: "/namaaz", label: "Namaaz Guide", gif: "/white_fox.gif", assetStyle: { position: "absolute", top: -31, left: "50%", width: 40, zIndex: 10, transition: "opacity 0.2s ease" } },
+  { href: "/prayer-times", label: "Namaaz Times", gif: "/red_fox.gif", assetStyle: { position: "absolute", top: -31, left: "50%", width: 40, zIndex: 10, transition: "opacity 0.2s ease" } },
 ];
 
 export default function Navbar() {
@@ -27,41 +26,46 @@ export default function Navbar() {
   const { user, loading, logout } = useAuth();
 
   return (
-    <div className="sticky top-0 z-20 w-full flex justify-center" style={{ background: "#F7F2E7" ,position : "relative" , boxShadow : "0px 4px 2px rgba(0,0,0,0.06)" }}>
+    <div className="sticky top-0 z-20 w-full flex justify-center" style={{ background: "#F7F2E7", position: "relative", boxShadow: "0px 4px 2px rgba(0,0,0,0.06)" }}>
       <div className="w-full max-w-md px-4 pt-5 pb-3">
         <div className="flex items-center justify-between mb-3">
-          <h1
-            className="text-2xl font-bold"
-            style={{ fontFamily: "'Amiri', serif", color: "#123832" }}
-          >
-            Halqa
-          </h1>
-          <img 
-        src="/pixel_leaves.gif" 
-        alt="Leaves" 
-        className="pointer-events-none"
-        style={{ 
-          position: "relative",
-          top: -5,    // Adjust to perch it perfectly on the header
-          left: -80,  // Placed just to the left of the "Ask something" button
-          width: 36,   // Adjust based on your GIF's actual size
-          zIndex: 10,
-          filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.06))" // Optional cozy shadow
-        }} 
-      />
-      <img 
-        src="/horse_black.gif" 
-        alt="fox" 
-        className="pointer-events-none"
-        style={{ 
-          position: "relative",
-          top: 1,    // Adjust to perch it perfectly on the header
-          left: -184,  // Placed just to the left of the "Ask something" button
-          width: 20,   // Adjust based on your GIF's actual size
-          zIndex: 10,
-          filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.06))" // Optional cozy shadow
-        }} 
-      />
+          
+          {/* --- WRAPPER ADDED HERE --- */}
+          <div style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
+            <h1
+              className="text-2xl font-bold"
+              style={{ fontFamily: "'Amiri', serif", color: "#123832", paddingRight: "5px" }} // Added slight padding
+            >
+              Halqa
+            </h1>
+            <img 
+              src="/pixel_leaves.gif" 
+              alt="Leaves" 
+              className="pointer-events-none"
+              style={{ 
+                position: "absolute",
+                top: -5,    
+                right: -32,  // Pushed exactly right of the text
+                width: 36,   
+                zIndex: 10,
+                filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.06))" 
+              }} 
+            />
+            <img 
+              src="/horse_black.gif" 
+              alt="fox" 
+              className="pointer-events-none"
+              style={{ 
+                position: "absolute",
+                top: 10,    
+                right: -27,  // Pushed just right of the leaves
+                width: 20,   
+                zIndex: 10,
+                filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.06))" 
+              }} 
+            />
+          </div>
+          {/* --- WRAPPER ENDS HERE --- */}
 
           {!loading && (
             user ? (
@@ -93,7 +97,6 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* 2. Added pt-6 (padding-top) so the perched GIFs don't clip outside the scroll container */}
         <nav className="flex gap-2 overflow-x-auto pt-6 pb-2 -mx-1 px-1">
           {LINKS.map((link) => {
             const active = pathname === link.href;
@@ -101,14 +104,12 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                // Added relative so the absolute GIF anchors to the pill
                 className="relative text-xs font-medium px-3 py-1.5 rounded-full whitespace-nowrap shrink-0 transition-transform hover:scale-[1.02]"
                 style={{
                   background: active ? "#123832" : "#EDE7D8",
                   color: active ? "#F7F2E7" : "#4B4737",
                 }}
               >
-                {/* 3. Render the GIF if it exists for this link */}
                 {link.gif && (
                   <img
                     src={link.gif}
@@ -116,16 +117,13 @@ export default function Navbar() {
                     className="pointer-events-none"
                     style={{
                       position: "absolute",
-                      top: -24, // Pushes it right above the pill
+                      top: -24,
                       left: "50%",
-                      transform: "translateX(-50%)", // Perfectly centers it regardless of word length
-                      width: 40, // Keep it small so the navbar doesn't feel cluttered
+                      transform: "translateX(-50%)",
+                      width: 40,
                       zIndex: 10,
-                      // Optional: If you only want the GIF to show on the ACTIVE tab, uncomment the line below:
-                      // opacity: active ? 1 : 0, 
                       transition: "opacity 0.2s ease",
-                      ...link.assetStyle, // Allow for custom styles per link if needed
-                      
+                      ...link.assetStyle, 
                     }}
                   />
                 )}
