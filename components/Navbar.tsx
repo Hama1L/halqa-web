@@ -45,7 +45,7 @@ export default function Navbar() {
               style={{ 
                 position: "absolute",
                 top: -5,    
-                right: -32,  // Pushed exactly right of the text
+                right: -24,  // Pushed exactly right of the text
                 width: 36,   
                 zIndex: 10,
                 filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.06))" 
@@ -58,7 +58,7 @@ export default function Navbar() {
               style={{ 
                 position: "absolute",
                 top: 10,    
-                right: -27,  // Pushed just right of the leaves
+                right: -20,  // Pushed just right of the leaves
                 width: 20,   
                 zIndex: 10,
                 filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.06))" 
