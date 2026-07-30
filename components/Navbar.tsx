@@ -27,7 +27,7 @@ export default function Navbar() {
   const { user, loading, logout } = useAuth();
 
   return (
-    <div className="sticky top-0 z-20 w-full flex justify-center" style={{ background: "#F7F2E7" }}>
+    <div className="sticky top-0 z-20 w-full flex justify-center" style={{ background: "#F7F2E7" ,position : "relative" , boxShadow : "0px 4px 2px rgba(0,0,0,0.06)" }}>
       <div className="w-full max-w-md px-4 pt-5 pb-3">
         <div className="flex items-center justify-between mb-3">
           <h1
@@ -43,7 +43,7 @@ export default function Navbar() {
         style={{ 
           position: "relative",
           top: -5,    // Adjust to perch it perfectly on the header
-          left: -76,  // Placed just to the left of the "Ask something" button
+          left: -80,  // Placed just to the left of the "Ask something" button
           width: 36,   // Adjust based on your GIF's actual size
           zIndex: 10,
           filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.06))" // Optional cozy shadow
@@ -56,7 +56,7 @@ export default function Navbar() {
         style={{ 
           position: "relative",
           top: 1,    // Adjust to perch it perfectly on the header
-          left: -180,  // Placed just to the left of the "Ask something" button
+          left: -184,  // Placed just to the left of the "Ask something" button
           width: 20,   // Adjust based on your GIF's actual size
           zIndex: 10,
           filter: "drop-shadow(0px 4px 2px rgba(0,0,0,0.06))" // Optional cozy shadow
