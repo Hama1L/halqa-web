@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import Link from "next/link";
 import { 
   Wind, CloudRain, Heart, Flame, Compass, Mountain, 
   RefreshCw, CloudOff, BookOpen, Quote, Calendar, 
-  ShieldCheck, Clock, Sparkles, ChevronRight, MessageSquare 
+  ShieldCheck, Clock, Sparkles, ChevronRight, MessageSquare, MapPin
 } from "lucide-react";
 
 // --- MOOD CONFIGURATION ---
@@ -97,6 +97,131 @@ function LatticeDivider() {
       </defs>
       <rect width="200" height="8" fill="url(#lattice)" />
     </svg>
+  );
+}
+
+const KARACHI_COORDS = { lat: 24.8607, lon: 67.0011 };
+const PRAYER_KEYS = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+const CITY_PRESETS = [
+  { name: "Karachi", lat: 24.8607, lon: 67.0011, backgroundGif: "/karachi.gif" },
+  { name: "Islamabad", lat: 33.738045, lon: 73.084488, backgroundGif: "/islamabad.gif" },
+];
+
+function karachiDate() {
+  return new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Karachi",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(new Date()).replaceAll("/", "-");
+}
+
+async function fetchCityTimings(city: (typeof CITY_PRESETS)[number]) {
+  const res = await fetch(
+    `https://api.aladhan.com/v1/timings/${karachiDate()}?latitude=${city.lat}&longitude=${city.lon}&method=1`
+  );
+  if (!res.ok) throw new Error("prayer times fetch failed");
+  const json = await res.json();
+  return json.data.timings as Record<string, string>;
+}
+
+function minutesUntil(time: string) {
+  const [hours, minutes] = time.split(":").map(Number);
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Karachi",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(new Date());
+  const currentMinutes = Number(parts.find((part) => part.type === "hour")?.value) * 60
+    + Number(parts.find((part) => part.type === "minute")?.value);
+  return hours * 60 + minutes - currentMinutes;
+}
+
+function formatPrayerTime(time: string) {
+  const [hours, minutes] = time.split(":").map(Number);
+  const suffix = hours >= 12 ? "PM" : "AM";
+  return `${hours % 12 || 12}:${String(minutes).padStart(2, "0")} ${suffix}`;
+}
+
+function formatCountdown(totalMinutes: number) {
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return hours ? `${hours} hr${hours === 1 ? "" : "s"}${minutes ? ` ${minutes} min${minutes === 1 ? "" : "s"}` : ""}` : `${minutes} min${minutes === 1 ? "" : "s"}`;
+}
+
+function NextPrayerWidget() {
+  const [selectedCity, setSelectedCity] = useState(CITY_PRESETS[0]);
+  const [timings, setTimings] = useState<Record<string, string> | null>(null);
+  const [nextPrayer, setNextPrayer] = useState<{ name: string; time: string; minutes: number } | null>(null);
+
+  useEffect(() => {
+    setTimings(null);
+    fetchCityTimings(selectedCity).then(setTimings).catch(() => setTimings(null));
+  }, [selectedCity]);
+
+  useEffect(() => {
+    if (!timings) return;
+    const updateNextPrayer = () => {
+      const upcoming = PRAYER_KEYS
+        .map((name) => ({ name, time: timings[name]?.split(" ")[0] ?? "", minutes: minutesUntil(timings[name] ?? "00:00") }))
+        .find((prayer) => prayer.minutes >= 0);
+      setNextPrayer(upcoming ?? { name: "Fajr", time: timings.Fajr?.split(" ")[0] ?? "", minutes: minutesUntil(timings.Fajr ?? "00:00") + 1440 });
+    };
+    updateNextPrayer();
+    const interval = window.setInterval(updateNextPrayer, 60_000);
+    return () => window.clearInterval(interval);
+  }, [timings]);
+
+  return (
+    <div
+      className="relative mt-1 rounded-2xl px-3.5 py-3 transition-shadow hover:shadow-sm"
+      style={{
+        backgroundColor: "#FFFCF5",
+        backgroundImage: `linear-gradient(rgba(255, 252, 245, 0.86), rgba(255, 252, 245, 0.94)), url(${selectedCity.backgroundGif})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        border: "1px solid #EAE3D3",
+        borderLeft: "3px solid #D9C98A",
+        color: "#123832",
+      }}
+    >
+      <Link href="/prayer-times" className="flex items-center justify-between gap-2.5">
+        <div className="flex min-w-0 items-center gap-2.5">
+          <div className="rounded-lg p-2" style={{ background: "#FBF3E1" }}>
+            <Clock size={18} color="#B8933D" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: "#9C9483" }}>{selectedCity.name} prayer times</p>
+            <p className="mt-0.5 truncate text-sm font-semibold" style={{ color: "#123832" }}>
+              {nextPrayer ? `Next: ${nextPrayer.name} in ${formatCountdown(nextPrayer.minutes)}` : "Loading today's next prayer..."}
+            </p>
+            {nextPrayer && <p className="text-xs" style={{ color: "#B8933D" }}>{formatPrayerTime(nextPrayer.time)}</p>}
+          </div>
+        </div>
+        <div className="flex shrink-0 items-center gap-1 text-[11px] font-medium" style={{ color: "#6E6859" }}>
+          <MapPin size={13} /> Open
+        </div>
+      </Link>
+      <div className="mt-2.5 flex items-center gap-1.5 border-t pt-2" style={{ borderColor: "#EAE3D3" }}>
+        <span className="mr-1 text-[10px] font-medium" style={{ color: "#9C9483" }}>City</span>
+        {CITY_PRESETS.map((city) => (
+          <button
+            key={city.name}
+            type="button"
+            onClick={() => setSelectedCity(city)}
+            className="rounded-full px-2.5 py-1 text-[10px] font-medium transition-colors"
+            style={{
+              background: selectedCity.name === city.name ? "#EDE7D8" : "transparent",
+              border: `1px solid ${selectedCity.name === city.name ? "#D9C98A" : "#EAE3D3"}`,
+              color: "#6E6859",
+            }}
+          >
+            {city.name}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -389,6 +514,8 @@ export default function HomePage() {
               Find solace in Quranic wisdom, connect with emotional clarity, and keep up with your daily Namaaz.
             </p>
           </section>
+
+          <NextPrayerWidget />
 
           {/* Interactive Mood & Daily Selection — tabby cat curled on the corner */}
           <section className="rounded-2xl p-4" style={{ background: "#FFFCF5", border: "1px solid #EAE3D3", position: "relative", overflow: "visible" }}>

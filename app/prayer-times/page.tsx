@@ -53,6 +53,7 @@ const PRAYERS = [
 ];
 
 const CALC_METHOD = 1; // University of Islamic Sciences, Karachi — a common default for South Asia
+const KARACHI_COORDS = { lat: 24.8607, lon: 67.0011 };
 
 function todayForAladhan() {
   const d = new Date();
@@ -465,7 +466,8 @@ function PrayerCard({ prayer, time }: PrayerCardProps) {
 }
 
 export default function PrayerTimes() {
-  const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(null);
+  const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(KARACHI_COORDS);
+  const [locationName, setLocationName] = useState("Karachi");
   const [locating, setLocating] = useState(false);
   const [locError, setLocError] = useState("");
   const [qibla, setQibla] = useState(null);
@@ -487,6 +489,11 @@ export default function PrayerTimes() {
     }
   }, []);
 
+  useEffect(() => {
+    const timeout = window.setTimeout(() => loadData(KARACHI_COORDS.lat, KARACHI_COORDS.lon), 0);
+    return () => window.clearTimeout(timeout);
+  }, [loadData]);
+
   const useGeolocation = () => {
     setLocError("");
     if (!navigator.geolocation) {
@@ -499,6 +506,7 @@ export default function PrayerTimes() {
         setLocating(false);
         const { latitude, longitude } = pos.coords;
         setCoords({ lat: latitude, lon: longitude });
+        setLocationName("Your current location");
         loadData(latitude, longitude);
       },
       (err) => {
@@ -516,10 +524,17 @@ export default function PrayerTimes() {
   const useManual = (lat : number, lon : number) => {
     setLocError("");
     setCoords({ lat, lon });
+    setLocationName("Custom coordinates");
     loadData(lat, lon);
   };
 
   const refresh = () => coords && loadData(coords.lat, coords.lon);
+  const changeLocation = () => {
+    setCoords(null);
+    setTimings(null);
+    setQibla(null);
+    setDataError("");
+  };
 
   return (
     <div className="min-h-screen w-full flex justify-center" style={{ background: "#F7F2E7" }}>
@@ -531,7 +546,9 @@ export default function PrayerTimes() {
               <h1 className="text-2xl font-bold" style={{ fontFamily: "'Amiri', serif", color: "#123832" }}>Namaaz Times</h1>
               <span className="text-xs mt-1" style={{ color: "#9C9483" }}>& Qibla</span>
             </div>
-            
+            <div className="flex items-center gap-1 text-[11px] font-medium" style={{ color: "#6E6859" }}>
+              <MapPin size={12} /> {locationName}
+            </div>
           </div>
           <div className="mt-3"><LatticeDivider /></div>
         </div>
@@ -576,9 +593,14 @@ export default function PrayerTimes() {
                 <span className="text-xs font-semibold tracking-wide uppercase" style={{ color: "#9C9483" }}>
                   Today's prayers
                 </span>
-                <button onClick={refresh} className="flex items-center gap-1 text-[11px]" style={{ color: "#123832" }}>
-                  <RefreshCw size={11} /> Refresh
-                </button>
+                <div className="flex items-center gap-3">
+                  <button onClick={changeLocation} className="flex items-center gap-1 text-[11px]" style={{ color: "#123832" }}>
+                    <MapPin size={11} /> Change location
+                  </button>
+                  <button onClick={refresh} className="flex items-center gap-1 text-[11px]" style={{ color: "#123832" }}>
+                    <RefreshCw size={11} /> Refresh
+                  </button>
+                </div>
               </div>
               {PRAYERS.map((p) => (
                 <PrayerCard key={p.key} prayer={p} time={timings[p.key]} />
